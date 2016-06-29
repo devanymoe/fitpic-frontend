@@ -13,7 +13,7 @@ class HomePage extends Component {
   }
 
   handlePress() {
-    this.props.onChangePage('camera');
+    this.props.navigator.push({name: 'camera'});
   }
 
   render() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../components/Button';
 import {
   AppRegistry,
   Dimensions,
@@ -11,6 +12,15 @@ import {
 import Camera from 'react-native-camera';
 
 class CameraPage extends Component {
+  constructor(props) {
+    super(props);
+    this.handlePress = this.handlePress.bind(this);
+  }
+
+  handlePress() {
+    this.props.navigator.pop();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -20,9 +30,10 @@ class CameraPage extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
+        <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         <Image style={styles.cover} source={require('../img/me.jpg')}></Image>
+        <Button text="back" onPress={this.handlePress} type="main"/>
       </View>
     );
   }
