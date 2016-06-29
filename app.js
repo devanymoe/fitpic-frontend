@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CameraPage from './pages/CameraPage';
 import HomePage from './pages/HomePage';
 import Navbar from './components/Navbar';
+import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
 
 import {
@@ -25,7 +26,7 @@ class App extends Component {
   }
 
   renderScene(route, navigator) {
-    var menu = <View><Text>Hi I'm menu</Text></View>;
+    var menu = <Menu />;
     var content;
 
     if (route.name === 'home') {
@@ -70,7 +71,13 @@ class App extends Component {
 }
 
 var drawerStyles = {
-  drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
+  drawer: {
+    shadowColor: '#000000',
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    backgroundColor: '#eee',
+    paddingTop: 40
+  },
   main: {paddingLeft: 3},
 }
 

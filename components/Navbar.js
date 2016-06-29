@@ -19,8 +19,8 @@ class Navbar extends Component {
   render() {
     return (
       <View style={navStyles.nav}>
-        <Button type="main" text="hamburg" onPress={this.handlePress}></Button>
-        <Text>FitPic</Text>
+        <Text onPress={this.handlePress} style={navStyles.text}>Menu</Text>
+        <Text style={navStyles.text}>FitPic</Text>
       </View>
     )
   }
@@ -28,9 +28,14 @@ class Navbar extends Component {
 
 var navStyles = StyleSheet.create({
   nav: {
-    backgroundColor: '#aaa',
+    backgroundColor: '#FD704B',
     height: 20,
     padding: 24
+  },
+  text: {
+    color: '#fff',
+    backgroundColor: 'blue',
+    left: 0
   }
 });
 

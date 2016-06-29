@@ -9,6 +9,7 @@
     "react": "15.1.0",
     "react-native": "0.28.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-    "react-native-drawer": "^2.2.4"
+    "react-native-drawer": "^2.2.4",
+    "react-native-navigation-bar": "^0.1.10"
   }
 }
