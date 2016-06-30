@@ -7,20 +7,15 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-class HomePage extends Component {
+class HelpPage extends Component {
   constructor(props) {
     super(props);
-    this.handlePress = this.handlePress.bind(this);
-  }
-
-  handlePress() {
-    this.props.navigator.push({name: 'camera'});
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>This is the homepage</Text>
+        <Text>This is the help page</Text>
       </View>
     )
   }
@@ -35,4 +30,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default HomePage;
+export default HelpPage;

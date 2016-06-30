@@ -21,9 +21,26 @@ class Menu extends Component {
   }
 
   handlePress(item) {
-    if (item === 'Pictures') {
-      console.log('hi')
-      this.props.navigator.push({name: 'camera'});
+    if (item === 'Home') {
+      this.props.navigator.push({name: 'home'});
+    }
+    else if (item === 'Pictures') {
+      this.props.navigator.push({name: 'pictures'});
+    }
+    else if (item === 'Measurements') {
+      this.props.navigator.push({name: 'measure'});
+    }
+    else if (item === 'Timeline') {
+      this.props.navigator.push({name: 'timeline'});
+    }
+    else if (item === 'Progress') {
+      this.props.navigator.push({name: 'progress'});
+    }
+    else if (item === 'Settings') {
+      this.props.navigator.push({name: 'settings'});
+    }
+    else if (item === 'Help') {
+      this.props.navigator.push({name: 'help'});
     }
   }
 

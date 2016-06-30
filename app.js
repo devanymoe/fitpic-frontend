@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import CameraPage from './pages/CameraPage';
 import HomePage from './pages/HomePage';
+import PicturesPage from './pages/PicturesPage';
+import CameraPage from './pages/CameraPage';
+import MeasurePage from './pages/MeasurePage';
+import TimelinePage from './pages/TimelinePage';
+import ProgressPage from './pages/ProgressPage';
+import SettingsPage from './pages/SettingsPage';
+import HelpPage from './pages/HelpPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
@@ -37,13 +43,31 @@ class App extends Component {
     var content;
 
     if (route.name === 'home') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress}/><HomePage navigator={navigator} /></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
+    }
+    else if (route.name === 'pictures') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures"/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
       content = <CameraPage navigator={navigator}/>;
     }
+    else if (route.name === 'measure') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements"/><MeasurePage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'timeline') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Timeline"/><TimelinePage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'progress') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Progress"/><ProgressPage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'settings') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Settings"/><SettingsPage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'help') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Help"/><HelpPage navigator={navigator}/></View>;
+    }
     else {
-      content = <HomePage navigator={navigator}/>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
     }
 
     return (

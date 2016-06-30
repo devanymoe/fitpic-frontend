@@ -24,7 +24,7 @@ class Navbar extends Component {
         <TouchableHighlight onPress={this.handlePress} style={navStyles.menu}>
           <Image style={navStyles.menuIcon} source={require('../img/menu.png')}></Image>
         </TouchableHighlight>
-        <Text style={[navStyles.text, navStyles.title]}>FitPic</Text>
+        <Text style={[navStyles.text, navStyles.title]}>{this.props.title}</Text>
         <Text style={navStyles.holder}></Text>
       </View>
     )
