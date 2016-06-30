@@ -592,7 +592,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fitpic.app/fitpic";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -609,7 +608,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fitpic.app/fitpic";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;
