@@ -3,7 +3,9 @@ import Button from './Button';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  TouchableHighlight
 } from 'react-native';
 
 class Navbar extends Component {
@@ -19,8 +21,11 @@ class Navbar extends Component {
   render() {
     return (
       <View style={navStyles.nav}>
-        <Text onPress={this.handlePress} style={navStyles.text}>Menu</Text>
-        <Text style={navStyles.text}>FitPic</Text>
+        <TouchableHighlight onPress={this.handlePress} style={navStyles.menu}>
+          <Image style={navStyles.menuIcon} source={require('../img/menu.png')}></Image>
+        </TouchableHighlight>
+        <Text style={[navStyles.text, navStyles.title]}>FitPic</Text>
+        <Text style={navStyles.holder}></Text>
       </View>
     )
   }
@@ -29,13 +34,28 @@ class Navbar extends Component {
 var navStyles = StyleSheet.create({
   nav: {
     backgroundColor: '#FD704B',
-    height: 20,
-    padding: 24
+    padding: 14,
+    paddingTop: 38,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   text: {
-    color: '#fff',
-    backgroundColor: 'blue',
-    left: 0
+    color: '#fff'
+  },
+  menu: {
+    width: 40
+  },
+  holder: {
+    width: 40
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  menuIcon: {
+    width: 20,
+    height: 17
   }
 });
 
