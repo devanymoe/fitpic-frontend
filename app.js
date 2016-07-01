@@ -15,7 +15,9 @@ import {
   Text,
   View,
   Navigator,
-  StatusBar
+  StatusBar,
+  Image,
+  TouchableHighlight
 } from 'react-native';
 
 
@@ -38,6 +40,10 @@ class App extends Component {
     }
   }
 
+  handleNewPhoto(navigator) {
+    navigator.push({name: 'camera'});
+  }
+
   renderScene(route, navigator) {
     var menu = <Menu navigator={navigator}/>;
     var content;
@@ -46,7 +52,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
     }
     else if (route.name === 'pictures') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures"/><PicturesPage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Image style={navStyles.menuIcon} source={require('./img/new.png')} /></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
       content = <CameraPage navigator={navigator}/>;
@@ -75,7 +81,7 @@ class App extends Component {
         type="overlay"
         content={menu}
         tapToClose={true}
-        openDrawerOffset={0.2} // 20% gap on the right side of drawer
+        openDrawerOffset={0.2}
         panCloseMask={0.2}
         closedDrawerOffset={-3}
         styles={drawerStyles}
@@ -115,7 +121,15 @@ var drawerStyles = {
     backgroundColor: '#fff',
     paddingTop: 40
   },
-  main: {paddingLeft: 3},
+  main: {paddingLeft: 3}
+}
+
+var navStyles = {
+  menuIcon: {
+    width: 20,
+    height: 20,
+    right: 0
+  }
 }
 
 var viewStyles = {

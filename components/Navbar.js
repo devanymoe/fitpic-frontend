@@ -21,11 +21,11 @@ class Navbar extends Component {
   render() {
     return (
       <View style={navStyles.nav}>
-        <TouchableHighlight onPress={this.handlePress} style={navStyles.menu}>
+        <TouchableHighlight onPress={this.handlePress.bind(this, 'menu')} style={navStyles.menu}>
           <Image style={navStyles.menuIcon} source={require('../img/menu.png')}></Image>
         </TouchableHighlight>
         <Text style={[navStyles.text, navStyles.title]}>{this.props.title}</Text>
-        <Text style={navStyles.holder}></Text>
+        <View style={navStyles.holder}>{this.props.right}</View>
       </View>
     )
   }
@@ -47,7 +47,8 @@ var navStyles = StyleSheet.create({
     width: 40
   },
   holder: {
-    width: 40
+    width: 40,
+    alignItems: 'flex-end'
   },
   title: {
     fontSize: 18,
