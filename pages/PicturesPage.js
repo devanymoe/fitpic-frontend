@@ -22,7 +22,6 @@ class PicturesPage extends Component {
     return (
       <View style={styles.container}>
         <Text>This is the photos page</Text>
-        <Button text="New Entry" onPress={this.handlePress} type="main"/>
       </View>
     )
   }
