@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   StyleSheet,
   Text,
@@ -14,7 +15,7 @@ class Menu extends Component {
     this.renderRow = this.renderRow.bind(this);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const menuItems = [{'title': 'Home'}, {'title': 'Pictures'}, {'title': 'Measurements'}, {'title': 'Timeline'}, {'title': 'Progress'}, {'title': 'Settings'}, {'title': 'Help'}, {'title': 'Logout'}];
+    const menuItems = [{'title': 'Home', 'icon': 'home'}, {'title': 'Pictures', 'icon': 'photo-camera'}, {'title': 'Measurements', 'icon': 'accessibility'}, {'title': 'Timeline', 'icon': 'event'}, {'title': 'Progress', 'icon': 'show-chart'}, {'title': 'Settings', 'icon': 'settings'}, {'title': 'Help', 'icon': 'help'}, {'title': 'Logout', 'icon': 'power-settings-new'}];
     this.state = {
       dataSource: ds.cloneWithRows(menuItems)
     };
@@ -47,7 +48,12 @@ class Menu extends Component {
   renderRow(rowData) {
     return (
       <TouchableHighlight onPress={this.handlePress.bind(this, rowData.title)} style={menuStyles.menuItem} item={rowData.title}>
-        <Text style={menuStyles.menuText}>{rowData.title}</Text>
+        <View style={menuStyles.rowView}>
+          <View style={menuStyles.iconContainer}>
+            <Icon name={rowData.icon} size={20} />
+          </View>
+          <Text style={menuStyles.menuText}>{rowData.title}</Text>
+        </View>
       </TouchableHighlight>
     )
   }
@@ -67,14 +73,21 @@ class Menu extends Component {
 var menuStyles = StyleSheet.create({
   menuText: {
     fontSize: 16,
+    marginLeft: 14
   },
   menuItem: {
-    padding: 16
+    padding: 16,
+  },
+  rowView: {
+    flexDirection: 'row'
   },
   separator: {
     flex: 1,
     height: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: '#eee',
+  },
+  iconContainer: {
+    width: 30
   }
 });
 

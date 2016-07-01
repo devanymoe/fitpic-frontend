@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   StyleSheet,
   Text,
@@ -35,11 +36,13 @@ class HomePage extends Component {
           <View style={styles.boxRow}>
             <TouchableHighlight onPress={this.handlePress.bind(this, 'pictures')}>
               <View style={styles.box}>
+                <Icon name='photo-camera' size={30} style={styles.icon}/>
                 <Text style={styles.boxText}>Pictures</Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight onPress={this.handlePress.bind(this, 'measure')}>
               <View style={styles.box}>
+                <Icon name='accessibility' size={30} style={styles.icon}/>
                 <Text style={styles.boxText}>Measurements</Text>
               </View>
             </TouchableHighlight>
@@ -47,11 +50,13 @@ class HomePage extends Component {
           <View style={styles.boxRow}>
             <TouchableHighlight onPress={this.handlePress.bind(this, 'timeline')} >
               <View style={styles.box}>
+                <Icon name='event' size={30} style={styles.icon}/>
                 <Text style={styles.boxText}>Timeline</Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight onPress={this.handlePress.bind(this, 'progress')}>
               <View style={styles.box}>
+                <Icon name='show-chart' size={30} style={styles.icon}/>
                 <Text style={styles.boxText}>Progress</Text>
               </View>
             </TouchableHighlight>
@@ -91,6 +96,9 @@ var styles = StyleSheet.create({
     paddingBottom: 20,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
+  },
+  icon: {
+    marginBottom: 16
   }
 });
 
