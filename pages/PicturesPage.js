@@ -8,7 +8,8 @@ import {
   View,
   TouchableHighlight,
   Image,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 
 class PicturesPage extends Component {
@@ -60,6 +61,8 @@ class PicturesPage extends Component {
   }
 }
 
+var {height, width} = Dimensions.get('window');
+
 var styles = StyleSheet.create({
   container: {
     backgroundColor: '#eee',
@@ -71,8 +74,8 @@ var styles = StyleSheet.create({
     paddingBottom: 20
   },
   image: {
-    width: 90,
-    height: 90,
+    width: ((width - 110) / 3),
+    height: ((width - 110) / 3),
     resizeMode: 'cover',
     marginTop: 10
   },

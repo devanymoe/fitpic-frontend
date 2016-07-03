@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions
 } from 'react-native';
 
 class HomePage extends Component {
@@ -68,6 +69,8 @@ class HomePage extends Component {
   }
 }
 
+var {height, width} = Dimensions.get('window');
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -77,8 +80,8 @@ var styles = StyleSheet.create({
   },
   box: {
     margin: 10,
-    width: 150,
-    height: 150,
+    width: ((width - 60) / 2),
+    height: ((width - 60) / 2),
     backgroundColor: '#ccc',
     alignItems: 'center',
     justifyContent: 'center'
