@@ -27,7 +27,7 @@ class PicturesPage extends Component {
     Service.getPictures().then(data => {
       var pictures = groupBy(data, function(obj) {
         var picDate = new Date(obj.date);
-        return picDate.getFullYear() + '-' + picDate.getMonth() + '-' + picDate.getDate();
+        return picDate.getFullYear() + '-' + (picDate.getMonth() + 1) + '-' + picDate.getDate();
       });
       console.log(pictures);
       this.setState({pictures: pictures});
@@ -77,7 +77,8 @@ var styles = StyleSheet.create({
     width: ((width - 110) / 3),
     height: ((width - 110) / 3),
     resizeMode: 'cover',
-    marginTop: 10
+    marginTop: 10,
+    backgroundColor: '#eee'
   },
   card: {
     padding: 20,

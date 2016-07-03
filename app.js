@@ -45,6 +45,10 @@ class App extends Component {
     navigator.push({name: 'camera'});
   }
 
+  handleNewMeasure(navigator) {
+    navigator.push({name: 'newMeasure'});
+  }
+
   renderScene(route, navigator) {
     var menu = <Menu navigator={navigator}/>;
     var content;
@@ -59,7 +63,7 @@ class App extends Component {
       content = <CameraPage navigator={navigator}/>;
     }
     else if (route.name === 'measure') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements"/><MeasurePage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;
     }
     else if (route.name === 'timeline') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Timeline"/><TimelinePage navigator={navigator}/></View>;
