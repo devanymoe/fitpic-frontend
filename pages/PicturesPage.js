@@ -38,7 +38,7 @@ class PicturesPage extends Component {
     for (var i = 0; i < arr.length; i++) {
       images.push(<Image source={{uri: arr[i].url}} style={styles.image} key={i}></Image>)
     }
-    return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text>{images}</View></View>)
+    return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
   }
 
   render() {
@@ -71,9 +71,10 @@ var styles = StyleSheet.create({
     paddingBottom: 20
   },
   image: {
-    width: 80,
-    height: 80,
-    resizeMode: 'cover'
+    width: 90,
+    height: 90,
+    resizeMode: 'cover',
+    marginTop: 10
   },
   card: {
     padding: 20,
@@ -86,6 +87,11 @@ var styles = StyleSheet.create({
       height: 2,
       width: 0
     }
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   cardContainer: {
     flexDirection: 'row',
