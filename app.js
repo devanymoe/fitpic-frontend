@@ -10,6 +10,7 @@ import HelpPage from './pages/HelpPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   Text,
@@ -52,7 +53,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
     }
     else if (route.name === 'pictures') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Image style={navStyles.menuIcon} source={require('./img/new.png')} /></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
       content = <CameraPage navigator={navigator}/>;

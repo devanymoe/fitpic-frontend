@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from './Button';
 import {
   StyleSheet,
@@ -22,7 +23,7 @@ class Navbar extends Component {
     return (
       <View style={navStyles.nav}>
         <TouchableHighlight onPress={this.handlePress.bind(this, 'menu')} style={navStyles.menu}>
-          <Image style={navStyles.menuIcon} source={require('../img/menu.png')}></Image>
+          <Icon name='menu' size={30} color='#fff'/>
         </TouchableHighlight>
         <Text style={[navStyles.text, navStyles.title]}>{this.props.title}</Text>
         <View style={navStyles.holder}>{this.props.right}</View>
