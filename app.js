@@ -63,7 +63,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
-      content = <CameraPage navigator={navigator}/>;
+      content = <CameraPage navigator={navigator} type={route.type}/>;
     }
     else if (route.name === 'measure') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;

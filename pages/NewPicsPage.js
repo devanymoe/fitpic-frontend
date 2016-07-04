@@ -21,7 +21,7 @@ class NewPicsPage extends Component {
     this.takePicture = this.takePicture.bind(this);
     this.state = {
       date: date,
-      type: 'Front'
+      type: 'front'
     };
   }
 
@@ -35,7 +35,7 @@ class NewPicsPage extends Component {
   }
 
   takePicture() {
-    this.props.navigator.push({name: 'camera'});
+    this.props.navigator.push({name: 'camera', type: this.state.type});
   }
 
   render() {

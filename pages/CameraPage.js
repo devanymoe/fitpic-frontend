@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Service from '../service';
 import {
   AppRegistry,
   Dimensions,
@@ -15,10 +16,21 @@ class CameraPage extends Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
+    this.state = {
+
+    }
   }
 
   handlePress() {
     this.props.navigator.pop();
+  }
+
+  componentDidMount() {
+    Service.getLastPhoto(this.props.type).then(data => {
+      if (data.length) {
+        this.setState({overlay: data[0].url});
+      }
+    });
   }
 
   render() {
@@ -32,7 +44,7 @@ class CameraPage extends Component {
           aspect={Camera.constants.Aspect.fill}>
         </Camera>
         <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-        <Image style={styles.cover} source={require('../img/me.jpg')}></Image>
+        <Image style={styles.cover} source={{uri: this.state.overlay}}></Image>
         <Button text="back" onPress={this.handlePress} type="main"/>
       </View>
     );

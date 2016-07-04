@@ -95,5 +95,18 @@ export default {
         measurements.splice(index, 1);
         return measurements;
        })
+  },
+  getLastPhoto: function(type) {
+    return fetch(url + '/users/' + user.id + '/pictures/' + type, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }).then(function(response) {
+      return response.json().then(function(data) {
+        return data;
+      });
+    });
   }
 }
