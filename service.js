@@ -69,11 +69,12 @@ export default {
       })
     };
 
-    fetch(url + '/users/' + form.user_id + '/measurements/new', obj)  
+    return fetch(url + '/users/' + user.id + '/measurements/new', obj)
       .then(function(res) {
         return res.json();
        })
       .then(function(resJson) {
+        measurements.push(resJson[0]);
         return resJson;
        })
   },

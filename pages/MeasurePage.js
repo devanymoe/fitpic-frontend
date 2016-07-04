@@ -37,7 +37,6 @@ class MeasurePage extends Component {
   }
 
   clickMeasure(measure_id) {
-    // open alert to edit or delete measurements with this id
     Alert.alert(
       'Update Measurements',
       '',

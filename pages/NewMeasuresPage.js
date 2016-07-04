@@ -35,7 +35,7 @@ class NewMeasuresPage extends Component {
 
   submitMeasures() {
     var form = {
-      date: parseInt(this.state.date),
+      date: this.state.date,
       weight: parseInt(this.state.weight),
       neck: parseInt(this.state.neck),
       arm: parseInt(this.state.arm),
@@ -45,7 +45,9 @@ class NewMeasuresPage extends Component {
       thigh: parseInt(this.state.thigh),
       calf: parseInt(this.state.calf)
     }
-    Service.postNewMeasure(form);
+    Service.postNewMeasure(form).then(() => {
+      this.props.navigator.push({name: 'measure'});
+    });
   }
 
   cancelMeasures() {
