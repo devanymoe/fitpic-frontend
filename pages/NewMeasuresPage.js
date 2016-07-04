@@ -59,7 +59,7 @@ class NewMeasuresPage extends Component {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Button onPress={this.showDatePicker} type="main" text="open this" />
-          <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
+          <DateTimePicker ref={(picker)=>{this.picker=picker}} style={styles.picker}/>
 
           <View style={styles.inputContainer}>
             <View style={styles.label}>
@@ -179,6 +179,9 @@ var styles = StyleSheet.create({
   },
   buttonContainer: {
 
+  },
+  picker: {
+    width: 200
   }
 });
 
