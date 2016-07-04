@@ -52,8 +52,6 @@ export default {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Origin': '',
-        'Host': 'api.producthunt.com'
       },
       body: JSON.stringify({
         'user_id': user.id,
@@ -79,6 +77,23 @@ export default {
        })
   },
   deleteMeasurement: function(measure_id) {
+    var index = measurements.findIndex((item) => {return item.id === measure_id});
 
+    var obj = {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'id': measure_id
+      })
+    };
+
+    return fetch(url + '/users/' + user.id + '/measurements/' + measure_id + '/delete', obj)
+      .then(function() {
+        measurements.splice(index, 1);
+        return measurements;
+       })
   }
 }

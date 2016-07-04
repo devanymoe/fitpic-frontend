@@ -60,7 +60,9 @@ class MeasurePage extends Component {
   }
 
   deleteEntry(measure_id) {
-    Service.deleteMeasurement(measure_id);
+    Service.deleteMeasurement(measure_id).then((data) => {
+      this.setState({measurements: data});
+    })
   }
 
   editEntry(measure_id) {
