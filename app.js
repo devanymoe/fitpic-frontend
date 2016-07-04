@@ -9,6 +9,7 @@ import SettingsPage from './pages/SettingsPage';
 import HelpPage from './pages/HelpPage';
 import NewPicsPage from './pages/NewPicsPage';
 import NewMeasuresPage from './pages/NewMeasuresPage';
+import EditMeasuresPage from './pages/EditMeasuresPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
@@ -81,6 +82,9 @@ class App extends Component {
     }
     else if (route.name === 'newMeasures') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Measurements"/><NewMeasuresPage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'editMeasures') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Edit Measurements"/><EditMeasuresPage navigator={navigator} id={route.id}/></View>;
     }
     else if (route.name === 'newPictures') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Pictures"/><NewPicsPage navigator={navigator}/></View>;

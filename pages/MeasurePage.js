@@ -43,7 +43,7 @@ class MeasurePage extends Component {
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'Delete Entry', onPress: () => this.deleteEntryConfirmation(measure_id)},
-        {text: 'Edit Entry', onPress: () => console.log('Ask me later pressed')},
+        {text: 'Edit Entry', onPress: () => this.editEntry(measure_id)},
       ]
     )
   }
@@ -66,7 +66,7 @@ class MeasurePage extends Component {
   }
 
   editEntry(measure_id) {
-
+    this.props.navigator.push({name: 'editMeasures', id: measure_id});
   }
 
   render() {
