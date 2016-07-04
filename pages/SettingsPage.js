@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Service from '../service';
 import {
   StyleSheet,
   Text,
@@ -19,7 +20,25 @@ class SettingsPage extends Component {
     }
   }
 
+  componentDidMount() {
+    Service.getUser().then(data => {
+      this.setState({user: data});
+      if (data.units === 'us') {
+        this.state.metric = false;
+      }
+      else {
+        this.state.metric = true;
+      }
+    });
+  }
+
   render() {
+
+    if (this.state.user) {
+      var username = this.state.user.username;
+      var email = this.state.user.email;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -28,7 +47,7 @@ class SettingsPage extends Component {
               Email
             </Text>
           </View>
-          <TextInput style={styles.input} underlineColorAndroid='rgba(0,0,0,0)'/>
+          <TextInput style={styles.input} underlineColorAndroid='rgba(0,0,0,0)' value={email} editable={false}/>
         </View>
         <View style={styles.inputContainer}>
           <View style={styles.label}>
@@ -36,7 +55,7 @@ class SettingsPage extends Component {
               Username
             </Text>
           </View>
-          <TextInput style={styles.input}/>
+          <TextInput style={styles.input} value={username} editable={false}/>
         </View>
         <View style={styles.inputContainer}>
           <View style={styles.switchLabel}>

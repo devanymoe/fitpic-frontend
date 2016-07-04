@@ -7,6 +7,8 @@ import TimelinePage from './pages/TimelinePage';
 import ProgressPage from './pages/ProgressPage';
 import SettingsPage from './pages/SettingsPage';
 import HelpPage from './pages/HelpPage';
+import NewPicsPage from './pages/NewPicsPage';
+import NewMeasuresPage from './pages/NewMeasuresPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
@@ -42,11 +44,11 @@ class App extends Component {
   }
 
   handleNewPhoto(navigator) {
-    navigator.push({name: 'camera'});
+    navigator.push({name: 'newPictures'});
   }
 
   handleNewMeasure(navigator) {
-    navigator.push({name: 'newMeasure'});
+    navigator.push({name: 'newMeasures'});
   }
 
   renderScene(route, navigator) {
@@ -76,6 +78,12 @@ class App extends Component {
     }
     else if (route.name === 'help') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Help"/><HelpPage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'newMeasures') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Measurements"/><NewMeasuresPage navigator={navigator}/></View>;
+    }
+    else if (route.name === 'newPictures') {
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Pictures"/><NewPicsPage navigator={navigator}/></View>;
     }
     else {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;

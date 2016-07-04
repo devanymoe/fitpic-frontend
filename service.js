@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-var user = {id: 1, units: 'us'};
+var user = {id: 1, units: 'us', username: 'devanymoe', email: 'devanymoe@gmail.com'};
 var pictures;
 var measurements;
 var allPicturesMeasures;
@@ -45,5 +45,39 @@ export default {
         return measurements;
       });
     });
+  },
+  postNewMeasure: function(form) {
+    var obj = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Origin': '',
+        'Host': 'api.producthunt.com'
+      },
+      body: JSON.stringify({
+        'user_id': user.id,
+        'date': form.date,
+        'weight': form.weight,
+        'neck': form.neck,
+        'arm': form.arm,
+        'chest': form.chest,
+        'waist': form.waist,
+        'hips': form.hips,
+        'thigh': form.thigh,
+        'calf': form.calf
+      })
+    };
+
+    fetch(url + '/users/' + form.user_id + '/measurements/new', obj)  
+      .then(function(res) {
+        return res.json();
+       })
+      .then(function(resJson) {
+        return resJson;
+       })
+  },
+  deleteMeasurement: function(measure_id) {
+
   }
 }

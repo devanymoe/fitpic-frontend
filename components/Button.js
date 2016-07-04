@@ -29,10 +29,10 @@ var styles = StyleSheet.create({
     padding: 10
   },
   main: {
-    backgroundColor: '#308796'
+    backgroundColor: '#FD704B'
   },
-  alert: {
-    backgroundColor: 'red'
+  gray: {
+    backgroundColor: '#999'
   }
 });
 

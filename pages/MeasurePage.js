@@ -8,13 +8,18 @@ import {
   TouchableHighlight,
   Image,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Alert
 } from 'react-native';
 
 class MeasurePage extends Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
+    this.clickMeasure = this.clickMeasure.bind(this);
+    this.editEntry = this.editEntry.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
+    this.deleteEntryConfirmation = this.deleteEntryConfirmation.bind(this);
     this.state = {};
   }
 
@@ -24,13 +29,43 @@ class MeasurePage extends Component {
 
   componentDidMount() {
     Service.getMeasurements().then(data => {
-      console.log(data);
       this.setState({measurements: data});
       Service.getUser().then(data => {
-        console.log(data)
         this.setState({user: data});
       });
     });
+  }
+
+  clickMeasure(measure_id) {
+    // open alert to edit or delete measurements with this id
+    Alert.alert(
+      'Update Measurements',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteEntryConfirmation(measure_id)},
+        {text: 'Edit Entry', onPress: () => console.log('Ask me later pressed')},
+      ]
+    )
+  }
+
+  deleteEntryConfirmation(measure_id) {
+    Alert.alert(
+      'Are you sure you want to delete this entry?',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteEntry(measure_id)},
+      ]
+    )
+  }
+
+  deleteEntry(measure_id) {
+    Service.deleteMeasurement(measure_id);
+  }
+
+  editEntry(measure_id) {
+
   }
 
   render() {
@@ -66,7 +101,7 @@ class MeasurePage extends Component {
         var calf =  measures[i].calf;
 
         var renderDate = (
-          <View key={i} style={styles.cardContainer}><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
+          <TouchableHighlight onPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer}><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
             <View style={styles.measurement}>
               <Text style={styles.measureValue}>{weight}{unitsWeight}</Text>
               <Text style={styles.measureTitle}>Weight</Text>
@@ -99,7 +134,7 @@ class MeasurePage extends Component {
               <Text style={styles.measureValue}>{calf}{unitsLength}</Text>
               <Text style={styles.measureTitle}>Calf</Text>
             </View>
-          </View></View></View>
+          </View></View></TouchableHighlight>
         );
 
         cards.push(renderDate);
