@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Service from '../service';
 import {
   StyleSheet,
   Text,
@@ -29,8 +30,9 @@ class NewPicsPage extends Component {
   }
 
   postPicture() {
-    // post picture code here
-    console.log('post picture')
+    Service.postPicture(this.props.path, this.state.type, this.state.date).then(() => {
+      this.props.navigator.push({name: 'pictures'});
+    });
   }
 
   cancelPicture() {
@@ -96,7 +98,7 @@ class NewPicsPage extends Component {
 
 
           <View style={styles.buttonContainer}>
-            <Button onPress={this.cancelPicture} type="main" text="Submit" />
+            <Button onPress={this.postPicture} type="main" text="Submit" />
             <Button onPress={this.cancelPicture} type="gray" text="Cancel" />
           </View>
         </ScrollView>

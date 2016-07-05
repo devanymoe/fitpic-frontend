@@ -108,5 +108,18 @@ export default {
         return data;
       });
     });
+  },
+  postPicture: function(path, type, date) {
+    var formData = new FormData();
+
+    formData.append('image', {uri: path, type: 'image/jpg', name: 'image.jpg'});
+    formData.append('date', date);
+    formData.append('type', type);
+
+    var options = { method: 'POST' };
+    options.body = formData;
+    return fetch(url + '/users/' + user.id + '/pictures/new', options).then((response) => {
+      console.log(response)
+    });
   }
 }
