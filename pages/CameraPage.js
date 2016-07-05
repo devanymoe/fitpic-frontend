@@ -15,14 +15,10 @@ import Camera from 'react-native-camera';
 class CameraPage extends Component {
   constructor(props) {
     super(props);
-    this.handlePress = this.handlePress.bind(this);
+    this.goBack = this.goBack.bind(this);
     this.state = {
 
     }
-  }
-
-  handlePress() {
-    this.props.navigator.pop();
   }
 
   componentDidMount() {
@@ -33,6 +29,16 @@ class CameraPage extends Component {
     });
   }
 
+  goBack() {
+    this.props.navigator.pop();
+  }
+
+  takePicture() {
+    this.camera.capture()
+      .then((data) => this.props.navigator.push({name: 'photoDraft', path: data.path, type: this.props.type, date: this.props.date}))
+      .catch(err => console.error(err));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -41,21 +47,18 @@ class CameraPage extends Component {
             this.camera = cam;
           }}
           style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
+          aspect={Camera.constants.Aspect.fit}
+          >
         </Camera>
-        <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         <Image style={styles.cover} source={{uri: this.state.overlay}}></Image>
-        <Button text="back" onPress={this.handlePress} type="main"/>
+        <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
+        <Button text="back" onPress={this.goBack} type="main"/>
       </View>
     );
   }
-
-  takePicture() {
-    this.camera.capture()
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-  }
 }
+
+var {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -75,14 +78,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-    // opacity: 0.5,
+    height: width * 1.33,
+    width: width,
     position: 'absolute',
-    top: 0
+    top: 0,
+    left: 0
   },
   capture: {
     flex: 0,
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
   },
   cover: {
     opacity: 0.3,
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    height: width * 1.33,
+    width: width,
     position: 'absolute',
     top: 0
   }

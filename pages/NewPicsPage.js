@@ -7,7 +7,8 @@ import {
   TouchableHighlight,
   TextInput,
   ScrollView,
-  Picker
+  Picker,
+  Image
 } from 'react-native';
 
 var dateObj = new Date();
@@ -19,9 +20,11 @@ class NewPicsPage extends Component {
     this.postPicture = this.postPicture.bind(this);
     this.cancelPicture = this.cancelPicture.bind(this);
     this.takePicture = this.takePicture.bind(this);
+    this.reviewPhoto = this.reviewPhoto.bind(this);
     this.state = {
-      date: date,
-      type: 'front'
+      date: this.props.date || date,
+      type: this.props.type || 'front',
+      buttonText: 'Take Picture'
     };
   }
 
@@ -35,10 +38,18 @@ class NewPicsPage extends Component {
   }
 
   takePicture() {
-    this.props.navigator.push({name: 'camera', type: this.state.type});
+    this.props.navigator.push({name: 'camera', type: this.state.type, date: this.state.date});
+  }
+
+  reviewPhoto() {
+    this.props.navigator.jumpBack();
   }
 
   render() {
+    if(this.props.path) {
+      var picture = (<TouchableHighlight onPress={this.reviewPhoto}><Image style={styles.picture} source={{uri: this.props.path}}></Image></TouchableHighlight>);
+    }
+
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -77,7 +88,8 @@ class NewPicsPage extends Component {
             </View>
             <View style={styles.photoButtonContainer}>
               <View style={styles.photoButton}>
-                <Button type="main" text="Take Picture" onPress={this.takePicture}/>
+                {picture}
+                <Button type="main" text={this.state.buttonText} onPress={this.takePicture}/>
               </View>
             </View>
           </View>
@@ -138,6 +150,11 @@ var styles = StyleSheet.create({
   },
   picker: {
     width: 200
+  },
+  picture: {
+    width: 200,
+    height: 200,
+    transform: [{rotate: '90deg'}]
   }
 });
 

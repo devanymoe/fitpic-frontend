@@ -10,6 +10,7 @@ import HelpPage from './pages/HelpPage';
 import NewPicsPage from './pages/NewPicsPage';
 import NewMeasuresPage from './pages/NewMeasuresPage';
 import EditMeasuresPage from './pages/EditMeasuresPage';
+import PhotoDraftPage from './pages/PhotoDraftPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
@@ -63,7 +64,10 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
-      content = <CameraPage navigator={navigator} type={route.type}/>;
+      content = <CameraPage navigator={navigator} type={route.type} date={route.date}/>;
+    }
+    else if (route.name === 'photoDraft') {
+      content = <PhotoDraftPage navigator={navigator} path={route.path} date={route.date} type={route.type}/>;
     }
     else if (route.name === 'measure') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;
@@ -87,7 +91,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Edit Measurements"/><EditMeasuresPage navigator={navigator} id={route.id}/></View>;
     }
     else if (route.name === 'newPictures') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Pictures"/><NewPicsPage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="New Picture"/><NewPicsPage navigator={navigator} date={route.date} type={route.type} path={route.path}/></View>;
     }
     else {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
