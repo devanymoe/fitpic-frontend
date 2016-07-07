@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import Secret from './secrets';
 var user = {id: 1, units: 'us', username: 'devanymoe', email: 'devanymoe@gmail.com'};
 var pictures;
 var measurements;
 var allPicturesMeasures;
+var Auth0Lock = require('react-native-lock');
+var lock = new Auth0Lock({clientId: Secret.clientId, domain: Secret.domain});
 var url = 'http://192.168.0.106:3000';
 
 // http://localhost:3000
@@ -122,6 +124,36 @@ export default {
     options.body = formData;
     return fetch(url + '/users/' + user.id + '/pictures/new', options).then((response) => {
       console.log(response)
+    });
+  },
+  showLogin: function() {
+    lock.show({}, (err, profile, token) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      var obj = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'email': profile.email,
+          'username': profile.nickname
+        })
+      };
+      fetch(url + '/login', obj).then(function(res) {
+        return res.json();
+       })
+      .then(function(resJson) {
+        console.log(resJson)
+        return resJson;
+      });
+
+      console.log(profile)
+      console.log(token)
     });
   }
 }

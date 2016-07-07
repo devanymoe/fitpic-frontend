@@ -1,6 +1,7 @@
 package com.fitpic;
 
 import com.facebook.react.ReactActivity;
+import com.auth0.lock.react.LockReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactPackage;
@@ -39,6 +40,7 @@ public class MainActivity extends ReactActivity {
         return Arrays.<ReactPackage>asList(
             new RCTDateTimePickerPackage(this),
             new MainReactPackage(),
+            new LockReactPackage(),
             new VectorIconsPackage(),
             new RCTCameraPackage()
         );
