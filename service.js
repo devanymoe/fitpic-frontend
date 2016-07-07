@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Secret from './secrets';
-var user = {id: 1, units: 'us', username: 'devanymoe', email: 'devanymoe@gmail.com'};
 var pictures;
 var measurements;
 var allPicturesMeasures;
@@ -8,6 +7,9 @@ var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: Secret.clientId, domain: Secret.domain});
 var url = 'http://192.168.0.106:3000';
 
+var user;
+
+var userToken;
 // http://localhost:3000
 
 export default {
@@ -19,11 +21,12 @@ export default {
       return Promise.resolve(pictures);
     }
 
-    return fetch(url + '/users/' + user.id + '/pictures', {
+    return fetch(url + '/users/pictures', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       }
     }).then(function(response) {
       return response.json().then(function(data) {
@@ -37,11 +40,12 @@ export default {
       return Promise.resolve(measurements);
     }
 
-    return fetch(url + '/users/' + user.id + '/measurements', {
+    return fetch(url + '/users/measurements', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       }
     }).then(function(response) {
       return response.json().then(function(data) {
@@ -56,6 +60,7 @@ export default {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       },
       body: JSON.stringify({
         'user_id': user.id,
@@ -71,7 +76,7 @@ export default {
       })
     };
 
-    return fetch(url + '/users/' + user.id + '/measurements/new', obj)
+    return fetch(url + '/users/measurements/new', obj)
       .then(function(res) {
         return res.json();
        })
@@ -88,24 +93,26 @@ export default {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       },
       body: JSON.stringify({
         'id': measure_id
       })
     };
 
-    return fetch(url + '/users/' + user.id + '/measurements/' + measure_id + '/delete', obj)
+    return fetch(url + '/users/measurements/' + measure_id + '/delete', obj)
       .then(function() {
         measurements.splice(index, 1);
         return measurements;
        })
   },
   getLastPhoto: function(type) {
-    return fetch(url + '/users/' + user.id + '/pictures/' + type, {
+    return fetch(url + '/users/pictures/' + type, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
       }
     }).then(function(response) {
       return response.json().then(function(data) {
@@ -120,9 +127,14 @@ export default {
     formData.append('date', date);
     formData.append('type', type);
 
-    var options = { method: 'POST' };
+    var options = {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + userToken
+      }
+    };
     options.body = formData;
-    return fetch(url + '/users/' + user.id + '/pictures/new', options).then((response) => {
+    return fetch(url + '/users/pictures/new', options).then((response) => {
       console.log(response)
     });
   },
@@ -133,27 +145,31 @@ export default {
         return;
       }
 
+      userToken = token.idToken;
+
       var obj = {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + userToken
         },
         body: JSON.stringify({
           'email': profile.email,
-          'username': profile.nickname
+          'username': profile.nickname,
         })
       };
       fetch(url + '/login', obj).then(function(res) {
         return res.json();
        })
       .then(function(resJson) {
+        user = resJson;
         console.log(resJson)
         return resJson;
       });
 
-      console.log(profile)
-      console.log(token)
+      // console.log(profile)
+      console.log(token.idToken)
     });
   }
 }

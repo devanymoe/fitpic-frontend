@@ -29,7 +29,6 @@ class PicturesPage extends Component {
         var picDate = new Date(obj.date);
         return picDate.getFullYear() + '-' + (picDate.getMonth() + 1) + '-' + picDate.getDate();
       });
-      console.log(pictures);
       this.setState({pictures: pictures});
     })
   }
