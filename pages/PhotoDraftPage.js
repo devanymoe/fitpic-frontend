@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   picContainer: {
-    transform: [{rotate: '90deg'}],
     height: width,
     width: height
   },

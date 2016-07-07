@@ -48,6 +48,7 @@ class CameraPage extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fit}
+          captureTarget={Camera.constants.CaptureTarget.disk}
           >
         </Camera>
         <Image style={styles.cover} source={{uri: this.state.overlay}}></Image>

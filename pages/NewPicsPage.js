@@ -156,7 +156,6 @@ var styles = StyleSheet.create({
   picture: {
     width: 200,
     height: 200,
-    transform: [{rotate: '90deg'}]
   }
 });
 

@@ -4,7 +4,9 @@ var user = {id: 1, units: 'us', username: 'devanymoe', email: 'devanymoe@gmail.c
 var pictures;
 var measurements;
 var allPicturesMeasures;
-var url = 'http://192.168.0.106:3000'
+var url = 'http://192.168.0.106:3000';
+
+// http://localhost:3000
 
 export default {
   getUser: function() {
