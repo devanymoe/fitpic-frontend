@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Service from '../service';
 import {
   StyleSheet,
   Text,
@@ -42,6 +43,9 @@ class Menu extends Component {
     }
     else if (item === 'Help') {
       this.props.navigator.push({name: 'help'});
+    }
+    else if (item === 'Logout') {
+      Service.logout(this.props.onLogout);
     }
   }
 

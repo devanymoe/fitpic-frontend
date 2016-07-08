@@ -55,7 +55,7 @@ class SettingsPage extends Component {
               Username
             </Text>
           </View>
-          <TextInput style={styles.input} value={username} editable={false}/>
+          <TextInput style={styles.input} underlineColorAndroid='rgba(0,0,0,0)' value={username} editable={false}/>
         </View>
         <View style={styles.inputContainer}>
           <View style={styles.switchLabel}>

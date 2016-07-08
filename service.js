@@ -3,6 +3,7 @@ import Secret from './secrets';
 var pictures;
 var measurements;
 var allPicturesMeasures;
+import { AsyncStorage } from 'react-native';
 var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: Secret.clientId, domain: Secret.domain});
 var url = 'http://192.168.0.106:3000';
@@ -138,7 +139,7 @@ export default {
       console.log(response)
     });
   },
-  showLogin: function() {
+  showLogin: function(onLoggedIn) {
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
@@ -159,17 +160,32 @@ export default {
           'username': profile.nickname,
         })
       };
-      fetch(url + '/login', obj).then(function(res) {
+
+      return fetch(url + '/login', obj).then(function(res) {
         return res.json();
        })
       .then(function(resJson) {
         user = resJson;
-        console.log(resJson)
-        return resJson;
+        AsyncStorage.setItem("id", resJson.id).then(function() {
+          onLoggedIn();
+        });
       });
-
-      // console.log(profile)
-      console.log(token.idToken)
     });
+  },
+  isLoggedIn() {
+    return AsyncStorage.getItem('id').then(function(id) {
+      if (!id) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    })
+  },
+  logout(handleLogout) {
+    AsyncStorage.removeItem('id').then(function() {
+      user = null;
+      handleLogout();
+    })
   }
 }

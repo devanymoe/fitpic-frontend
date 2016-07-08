@@ -11,10 +11,12 @@ import NewPicsPage from './pages/NewPicsPage';
 import NewMeasuresPage from './pages/NewMeasuresPage';
 import EditMeasuresPage from './pages/EditMeasuresPage';
 import PhotoDraftPage from './pages/PhotoDraftPage';
+import LoginSplashPage from './pages/LoginSplashPage';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Service from './service';
 
 import {
   Text,
@@ -22,7 +24,8 @@ import {
   Navigator,
   StatusBar,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 
 
@@ -33,6 +36,15 @@ class App extends Component {
     this.renderScene = this.renderScene.bind(this);
     this.handleMenuPress = this.handleMenuPress.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    Service.isLoggedIn().then(bool => {
+      this.setState({loggedIn: bool});
+    })
   }
 
   handleMenuPress() {
@@ -53,11 +65,24 @@ class App extends Component {
     navigator.push({name: 'newMeasures'});
   }
 
+  handleLogin(navigator) {
+    this.setState({loggedIn: true});
+    navigator.resetTo({name: 'home'});
+  }
+
+  handleLogout(navigator) {
+    this.setState({loggedIn: false});
+    navigator.resetTo({name: 'login'});
+  }
+
   renderScene(route, navigator) {
-    var menu = <Menu navigator={navigator}/>;
+    var menu = <Menu navigator={navigator} onLogout={this.handleLogout.bind(this, navigator)}/>;
     var content;
 
-    if (route.name === 'home') {
+    if (route.name === 'login') {
+      content = <LoginSplashPage navigator={navigator} onLoggedIn={this.handleLogin.bind(this, navigator)}></LoginSplashPage>;
+    }
+    else if (route.name === 'home') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
     }
     else if (route.name === 'pictures') {
@@ -117,20 +142,31 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <View style={viewStyles}>
+    if (this.state.loggedIn === undefined) {
+      return null;
+    }
+    else {
+      if (this.state.loggedIn === true) {
+        var initRoute = 'home';
+      }
+      else {
+        var initRoute = 'login';
+      }
+      return (
+        <View style={viewStyles}>
         <StatusBar
-          translucent={true}
-          barStyle={'default'}
-          backgroundColor={'rgba(0, 0, 0, 0.2)'}
+        translucent={true}
+        barStyle={'default'}
+        backgroundColor={'rgba(0, 0, 0, 0.2)'}
         />
         <Navigator
-          initialRoute={{name: 'home', index: 0}}
-          renderScene={this.renderScene}
-          onWillFocus={this.handleNavigate}
+        initialRoute={{name: initRoute, index: 0}}
+        renderScene={this.renderScene}
+        onWillFocus={this.handleNavigate}
         />
-      </View>
-    )
+        </View>
+      )
+    }
   }
 }
 

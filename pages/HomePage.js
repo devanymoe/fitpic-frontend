@@ -65,7 +65,6 @@ class HomePage extends Component {
           </View>
         </View>
         <Text>Put three most recent timeline items here</Text>
-       <Button type="main" text="Login" onPress={Service.showLogin}></Button>
       </View>
     )
   }
