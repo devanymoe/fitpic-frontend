@@ -25,7 +25,8 @@ import {
   StatusBar,
   Image,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  BackAndroid
 } from 'react-native';
 
 
@@ -38,13 +39,29 @@ class App extends Component {
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleBackButton = this.handleBackButton.bind(this);
     this.state = {};
   }
 
   componentDidMount() {
     Service.isLoggedIn().then(bool => {
       this.setState({loggedIn: bool});
-    })
+    });
+
+    BackAndroid.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton() {
+    const navigator = this._navigator;
+    
+    if (navigator && navigator.getCurrentRoutes().length > 1) {
+      navigator.pop();
+      return true;
+    }
   }
 
   handleMenuPress() {
@@ -163,6 +180,7 @@ class App extends Component {
         initialRoute={{name: initRoute, index: 0}}
         renderScene={this.renderScene}
         onWillFocus={this.handleNavigate}
+        ref={(ref) => {this._navigator = ref}}
         />
         </View>
       )
