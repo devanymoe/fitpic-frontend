@@ -187,5 +187,19 @@ export default {
       user = null;
       handleLogout();
     })
+  },
+  getProgress() {
+    return fetch(url + '/users/progress', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken
+      }
+    }).then(function(response) {
+      return response.json().then(function(data) {
+        return data;
+      });
+    });
   }
 }
