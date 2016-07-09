@@ -9,7 +9,8 @@ import {
   TouchableHighlight,
   Image,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Modal
 } from 'react-native';
 
 class ProgressPage extends Component {
@@ -19,7 +20,11 @@ class ProgressPage extends Component {
     this.renderMeasures = this.renderMeasures.bind(this);
     this.renderWeight = this.renderWeight.bind(this);
     this.renderPieChart = this.renderPieChart.bind(this);
-    this.state = {};
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.state = {
+      activeUrl: '',
+      modalVisible: false
+    };
   }
 
   componentDidMount() {
@@ -34,6 +39,11 @@ class ProgressPage extends Component {
     });
   }
 
+  setModalVisible(visible, url) {
+    this.setState({activeUrl: url});
+    this.setState({modalVisible: visible});
+  }
+
   renderPictures() {
     if (this.state.progress) {
       var pictures = this.state.progress.pictures;
@@ -42,22 +52,34 @@ class ProgressPage extends Component {
       if (pictures.first.front !== pictures.last.front) {
         imageSections.push(<View key="front"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: pictures.first.front}}/>
-          <Image style={styles.image} source={{uri: pictures.last.front}}/>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.front)}>
+            <Image style={styles.image} source={{uri: pictures.first.front}}/>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.front)}>
+            <Image style={styles.image} source={{uri: pictures.last.front}}/>
+          </TouchableHighlight>
         </View></View>)
       }
       if (pictures.first.side !== pictures.last.side) {
         imageSections.push(<View key="side"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: pictures.first.side}}/>
-          <Image style={styles.image} source={{uri: pictures.last.side}}/>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.side)}>
+            <Image style={styles.image} source={{uri: pictures.first.side}}/>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.side)}>
+            <Image style={styles.image} source={{uri: pictures.last.side}}/>
+          </TouchableHighlight>
         </View></View>)
       }
       if (pictures.first.back !== pictures.last.back) {
         imageSections.push(<View key="back"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: pictures.first.back}}/>
-          <Image style={styles.image} source={{uri: pictures.last.back}}/>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.back)}>
+            <Image style={styles.image} source={{uri: pictures.first.back}}/>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.back)}>
+            <Image style={styles.image} source={{uri: pictures.last.back}}/>
+          </TouchableHighlight>
         </View></View>)
       }
 
@@ -206,6 +228,19 @@ class ProgressPage extends Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {this.setModalVisible(false, '')}}
+          >
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, false, '')} style={[styles.modalContainer, styles.modalBackground]}>
+            <View>
+              <View style={styles.innerContainer}>
+                <Image source={{uri: this.state.activeUrl}} style={styles.modalImage}/>
+              </View>
+            </View>
+          </TouchableHighlight>
+        </Modal>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {cards}
         </ScrollView>
@@ -275,6 +310,26 @@ var styles = StyleSheet.create({
     width: width - 110,
     height: 160,
     marginTop: 10
+  },
+  innerContainer: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  modalContainer: {
+    backgroundColor: '#eee',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalBackground: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalImage: {
+    width: width - 110,
+    height: (width - 110) * 1.33
   }
 });
 

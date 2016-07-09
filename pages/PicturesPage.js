@@ -10,18 +10,22 @@ import {
   Image,
   ScrollView,
   Dimensions,
-  Alert
+  Alert,
+  Modal
 } from 'react-native';
 
 class PicturesPage extends Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
-    this.viewPhoto = this.viewPhoto.bind(this);
     this.deletePhoto = this.deletePhoto.bind(this);
     this.deleteConfirmation = this.deleteConfirmation.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
-    this.state = {};
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.state = {
+      activeUrl: '',
+      modalVisible: false
+    };
   }
 
   handlePress() {
@@ -38,8 +42,9 @@ class PicturesPage extends Component {
     });
   }
 
-  viewPhoto(url) {
-
+  setModalVisible(visible, url) {
+    this.setState({activeUrl: url});
+    this.setState({modalVisible: visible});
   }
 
   deletePhoto(url) {
@@ -77,7 +82,7 @@ class PicturesPage extends Component {
   renderGroup(groupName, arr) {
     var images = [];
     for (var i = 0; i < arr.length; i++) {
-      images.push(<TouchableHighlight onPress={this.viewPhoto.bind(this, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
+      images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
     }
     return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
   }
@@ -93,6 +98,19 @@ class PicturesPage extends Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {this.setModalVisible(false, '')}}
+          >
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, false, '')} style={[styles.modalContainer, styles.modalBackground]}>
+            <View>
+              <View style={styles.innerContainer}>
+                <Image source={{uri: this.state.activeUrl}} style={styles.modalImage}/>
+              </View>
+            </View>
+          </TouchableHighlight>
+        </Modal>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {cards}
         </ScrollView>
@@ -141,6 +159,26 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20,
     paddingBottom: 0
+  },
+  innerContainer: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  modalContainer: {
+    backgroundColor: '#eee',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalBackground: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalImage: {
+    width: width - 110,
+    height: (width - 110) * 1.33
   }
 });
 
