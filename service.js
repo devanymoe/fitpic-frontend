@@ -14,129 +14,157 @@ var userToken;
 // http://localhost:3000
 
 export default {
+  getToken: function() {
+    if (userToken) {
+      return Promise.resolve(userToken);
+    }
+
+    return AsyncStorage.getItem('userToken').then(function(data) {
+      userToken = data;
+      return userToken;
+    });
+  },
   getUser: function() {
-    return Promise.resolve(user);
+    if (user) {
+      return Promise.resolve(user);
+    }
+    return AsyncStorage.getItem('user').then(function(data) {
+      user = JSON.parse(data);
+      return user;
+    });
   },
   getPictures: function() {
     if (pictures) {
       return Promise.resolve(pictures);
     }
 
-    return fetch(url + '/users/pictures', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      }
-    }).then(function(response) {
-      return response.json().then(function(data) {
-        pictures = data;
-        return pictures;
+    return this.getToken().then(function(token) {
+      return fetch(url + '/users/pictures', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          pictures = data;
+          return pictures;
+        });
       });
-    });
+    })
   },
   getMeasurements: function() {
     if (measurements) {
       return Promise.resolve(measurements);
     }
 
-    return fetch(url + '/users/measurements', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      }
-    }).then(function(response) {
-      return response.json().then(function(data) {
-        measurements = data;
-        return measurements;
+    return this.getToken().then(function(token) {
+      return fetch(url + '/users/measurements', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          measurements = data;
+          return measurements;
+        });
       });
     });
   },
   postNewMeasure: function(form) {
-    var obj = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      },
-      body: JSON.stringify({
-        'user_id': user.id,
-        'date': form.date,
-        'weight': form.weight,
-        'neck': form.neck,
-        'arm': form.arm,
-        'chest': form.chest,
-        'waist': form.waist,
-        'hips': form.hips,
-        'thigh': form.thigh,
-        'calf': form.calf
-      })
-    };
+    return this.getToken().then(function(token) {
+      var obj = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          'user_id': user.id,
+          'date': form.date,
+          'weight': form.weight,
+          'neck': form.neck,
+          'arm': form.arm,
+          'chest': form.chest,
+          'waist': form.waist,
+          'hips': form.hips,
+          'thigh': form.thigh,
+          'calf': form.calf
+        })
+      };
 
-    return fetch(url + '/users/measurements/new', obj)
+      return fetch(url + '/users/measurements/new', obj)
       .then(function(res) {
         return res.json();
-       })
+      })
       .then(function(resJson) {
         measurements.push(resJson[0]);
         return resJson;
-       })
+      });
+    });
   },
   deleteMeasurement: function(measure_id) {
     var index = measurements.findIndex((item) => {return item.id === measure_id});
 
-    var obj = {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      },
-      body: JSON.stringify({
-        'id': measure_id
-      })
-    };
+    return this.getToken().then(function(token) {
+      var obj = {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          'id': measure_id
+        })
+      };
 
-    return fetch(url + '/users/measurements/' + measure_id + '/delete', obj)
+      return fetch(url + '/users/measurements/' + measure_id + '/delete', obj)
       .then(function() {
         measurements.splice(index, 1);
         return measurements;
-       })
+      });
+    });
   },
   getLastPhoto: function(type) {
-    return fetch(url + '/users/pictures/' + type, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      }
-    }).then(function(response) {
-      return response.json().then(function(data) {
-        return data;
+    return this.getToken().then(function(token) {
+      return fetch(url + '/users/pictures/' + type, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          return data;
+        });
       });
     });
   },
   postPicture: function(path, type, date) {
-    var formData = new FormData();
+    return this.getToken.then(function(token) {
+      var formData = new FormData();
 
-    formData.append('image', {uri: path, type: 'image/jpg', name: 'image.jpg'});
-    formData.append('date', date);
-    formData.append('type', type);
+      formData.append('image', {uri: path, type: 'image/jpg', name: 'image.jpg'});
+      formData.append('date', date);
+      formData.append('type', type);
 
-    var options = {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + userToken
-      }
-    };
-    options.body = formData;
-    return fetch(url + '/users/pictures/new', options).then((response) => {
-      console.log(response)
+      var options = {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      };
+      options.body = formData;
+      return fetch(url + '/users/pictures/new', options).then((response) => {
+        console.log(response)
+      });
     });
   },
   showLogin: function(onLoggedIn) {
@@ -147,6 +175,7 @@ export default {
       }
 
       userToken = token.idToken;
+      AsyncStorage.setItem("userToken", token.idToken);
 
       var obj = {
         method: 'POST',
@@ -166,15 +195,15 @@ export default {
        })
       .then(function(resJson) {
         user = resJson;
-        AsyncStorage.setItem("id", resJson.id).then(function() {
+        AsyncStorage.setItem("user", JSON.stringify(resJson)).then(function() {
           onLoggedIn();
         });
       });
     });
   },
   isLoggedIn() {
-    return AsyncStorage.getItem('id').then(function(id) {
-      if (!id) {
+    return AsyncStorage.getItem('userToken').then(function(token) {
+      if (!token) {
         return false;
       }
       else {
@@ -183,22 +212,41 @@ export default {
     })
   },
   logout(handleLogout) {
-    AsyncStorage.removeItem('id').then(function() {
+    AsyncStorage.removeItem('user');
+    AsyncStorage.removeItem('userToken').then(function() {
       user = null;
       handleLogout();
     })
   },
   getProgress() {
-    return fetch(url + '/users/progress', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken
-      }
-    }).then(function(response) {
-      return response.json().then(function(data) {
-        return data;
+    return this.getToken().then(function(token) {
+      return fetch(url + '/users/progress', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          return data;
+        });
+      });
+    });
+  },
+  getProgressWeight() {
+    return this.getToken().then(function(token) {
+      return fetch(url + '/users/progress/weight', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          return data;
+        });
       });
     });
   }

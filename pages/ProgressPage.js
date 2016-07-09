@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Service from '../service';
+import Chart from 'react-native-chart';
 import {
   StyleSheet,
   Text,
@@ -16,15 +17,18 @@ class ProgressPage extends Component {
     super(props);
     this.renderPictures = this.renderPictures.bind(this);
     this.renderMeasures = this.renderMeasures.bind(this);
+    this.renderWeight = this.renderWeight.bind(this);
     this.state = {};
   }
 
   componentDidMount() {
     Service.getProgress().then(data => {
-      console.log(data)
       this.setState({progress: data});
       Service.getUser().then(data => {
         this.setState({user: data});
+        Service.getProgressWeight().then(data => {
+          this.setState({weight: data});
+        });
       });
     });
   }
@@ -126,11 +130,38 @@ class ProgressPage extends Component {
     }
   }
 
+  renderWeight() {
+    const data = [
+      ["1/12/16", 100],
+      ["2/12/16", 110],
+      ["3/12/16", 116],
+      ["4/12/16", 125],
+    ];
+
+    if (this.state.weight && this.state.weight.length > 1) {
+      return (
+        <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
+          <Chart
+            style={styles.chart}
+            data={data}
+            verticalGridStep={3}
+            type="pie"
+            lineWidth={2}
+            showDataPoint={true}
+            xAxisHeight={16}
+            yAxisWidth={30}
+          />
+        </View></View>
+      )
+    }
+  }
+
   render() {
     var cards = [];
 
     cards.push(this.renderPictures());
     cards.push(this.renderMeasures());
+    cards.push(this.renderWeight());
 
     return (
       <View style={styles.container}>
@@ -198,6 +229,10 @@ var styles = StyleSheet.create({
     resizeMode: 'cover',
     marginTop: 10,
     backgroundColor: '#eee'
+  },
+  chart: {
+    width: 200,
+    height: 200
   }
 });
 
