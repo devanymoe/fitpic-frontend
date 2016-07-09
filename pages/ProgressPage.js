@@ -30,7 +30,34 @@ class ProgressPage extends Component {
   }
 
   renderPictures() {
+    if (this.state.progress) {
+      var pictures = this.state.progress.pictures;
+      var imageSections = [];
 
+      if (pictures.first.front !== pictures.last.front) {
+        imageSections.push(<View key="front"><Text>Front Progress</Text>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: pictures.first.front}}/>
+          <Image style={styles.image} source={{uri: pictures.last.front}}/>
+        </View></View>)
+      }
+      if (pictures.first.side !== pictures.last.side) {
+        imageSections.push(<View key="side"><Text>Front Progress</Text>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: pictures.first.side}}/>
+          <Image style={styles.image} source={{uri: pictures.last.side}}/>
+        </View></View>)
+      }
+      if (pictures.first.back !== pictures.last.back) {
+        imageSections.push(<View key="back"><Text>Front Progress</Text>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: pictures.first.back}}/>
+          <Image style={styles.image} source={{uri: pictures.last.back}}/>
+        </View></View>)
+      }
+
+      return(<View style={styles.cardContainer} key="pictures"><View style={styles.card}>{imageSections}</View></View>);
+    }
   }
 
   renderMeasures() {
@@ -61,7 +88,7 @@ class ProgressPage extends Component {
         var calfDiff = measure.last.calf - measure.first.calf;
         var totalDiff = neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff;
 
-        return(<View key="measurements" style={styles.card}><Text>Total Change: {totalDiff}{unitsLength}</Text><View style={styles.measureContainer}>
+        return(<View style={styles.cardContainer} key="measurements"><View  style={styles.card}><Text>Total Change: {totalDiff}{unitsLength}</Text><View style={styles.measureContainer}>
           <View style={styles.measurement}>
           <Text style={styles.measureValue}>{weightDiff}{unitsWeight}</Text>
           <Text style={styles.measureTitle}>Weight</Text>
@@ -94,7 +121,7 @@ class ProgressPage extends Component {
           <Text style={styles.measureValue}>{calfDiff}{unitsLength}</Text>
           <Text style={styles.measureTitle}>Calf</Text>
           </View>
-        </View></View>);
+        </View></View></View>);
       }
     }
   }
@@ -108,9 +135,7 @@ class ProgressPage extends Component {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.cardContainer}>
-            {cards}
-          </View>
+          {cards}
         </ScrollView>
       </View>
     )
@@ -161,6 +186,18 @@ var styles = StyleSheet.create({
   measureValue: {
     fontSize: 20,
     color: '#aaa'
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  image: {
+    width: ((width - 110) / 2),
+    height: ((width - 110) / 2),
+    resizeMode: 'cover',
+    marginTop: 10,
+    backgroundColor: '#eee'
   }
 });
 
