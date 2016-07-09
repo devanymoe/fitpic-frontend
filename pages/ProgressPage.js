@@ -18,6 +18,7 @@ class ProgressPage extends Component {
     this.renderPictures = this.renderPictures.bind(this);
     this.renderMeasures = this.renderMeasures.bind(this);
     this.renderWeight = this.renderWeight.bind(this);
+    this.renderPieChart = this.renderPieChart.bind(this);
     this.state = {};
   }
 
@@ -68,6 +69,7 @@ class ProgressPage extends Component {
     if (this.state.user) {
       var unitsWeight;
       var unitsLength;
+      console.log(this.state.user)
 
       if (this.state.user.units === 'us') {
         unitsWeight = 'lb';
@@ -131,28 +133,66 @@ class ProgressPage extends Component {
   }
 
   renderWeight() {
-    const data = [
-      ["1/12/16", 100],
-      ["2/12/16", 110],
-      ["3/12/16", 116],
-      ["4/12/16", 125],
-    ];
-
     if (this.state.weight && this.state.weight.length > 1) {
+      var weight = this.state.weight;
+      const data = [];
+
+      for (var i = 0; i < weight.length; i++) {
+        data.push([weight[i].date, weight[i].weight]);
+      }
+      console.log(data)
       return (
         <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
           <Chart
             style={styles.chart}
             data={data}
-            verticalGridStep={3}
-            type="pie"
+            verticalGridStep={4}
+            type="line"
             lineWidth={2}
             showDataPoint={true}
             xAxisHeight={16}
             yAxisWidth={30}
+            color="#FD704B"
           />
         </View></View>
       )
+    }
+  }
+
+  renderPieChart() {
+    if (this.state.progress) {
+      var measure = this.state.progress.measurements;
+      if (measure.first && measure.last) {
+        var neckDiff = measure.last.neck - measure.first.neck;
+        var armDiff = measure.last.arm - measure.first.arm;
+        var chestDiff = measure.last.chest - measure.first.chest;
+        var waistDiff = measure.last.waist - measure.first.waist;
+        var hipsDiff = measure.last.hips - measure.first.hips;
+        var thighDiff = measure.last.thigh - measure.first.thigh;
+        var calfDiff = measure.last.calf - measure.first.calf;
+        var totalDiff = neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff;
+
+        const data = [
+          ['Neck', neckDiff],
+          ['Arm', armDiff],
+          ['Chest', chestDiff],
+          ['Waist', waistDiff],
+          ['Hips', hipsDiff],
+          ['Thigh', thighDiff],
+          ['Calf', calfDiff]
+        ];
+
+        return (
+          <View key="progress-chart" style={styles.cardContainer}><View style={styles.card}>
+            <Chart
+              style={styles.chart}
+              data={data}
+              type="pie"
+              showAxis={false}
+            />
+          </View></View>
+        )
+      }
     }
   }
 
@@ -161,6 +201,7 @@ class ProgressPage extends Component {
 
     cards.push(this.renderPictures());
     cards.push(this.renderMeasures());
+    cards.push(this.renderPieChart());
     cards.push(this.renderWeight());
 
     return (
@@ -231,8 +272,9 @@ var styles = StyleSheet.create({
     backgroundColor: '#eee'
   },
   chart: {
-    width: 200,
-    height: 200
+    width: width - 110,
+    height: 160,
+    marginTop: 10
   }
 });
 

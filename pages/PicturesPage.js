@@ -9,13 +9,18 @@ import {
   TouchableHighlight,
   Image,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Alert
 } from 'react-native';
 
 class PicturesPage extends Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
+    this.viewPhoto = this.viewPhoto.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
+    this.deleteConfirmation = this.deleteConfirmation.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
     this.state = {};
   }
 
@@ -27,16 +32,52 @@ class PicturesPage extends Component {
     Service.getPictures().then(data => {
       var pictures = groupBy(data, function(obj) {
         var picDate = new Date(obj.date);
-        return picDate.getFullYear() + '-' + (picDate.getMonth() + 1) + '-' + picDate.getDate();
+        return (picDate.getMonth() + 1) + '/' + picDate.getDate() + '/' + picDate.getFullYear();
       });
       this.setState({pictures: pictures});
-    })
+    });
+  }
+
+  viewPhoto(url) {
+
+  }
+
+  deletePhoto(url) {
+    Alert.alert(
+      'Delete Picture',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteConfirmation(url)}
+      ]
+    )
+  }
+
+  deleteConfirmation(url) {
+    Alert.alert(
+      'Are you sure you want to delete this picture?',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteEntry(url)},
+      ]
+    )
+  }
+
+  deleteEntry(url) {
+    Service.deletePicture(url).then((data) => {
+      var pictures = groupBy(data, function(obj) {
+        var picDate = new Date(obj.date);
+        return (picDate.getMonth() + 1) + '/' + picDate.getDate() + '/' + picDate.getFullYear();
+      });
+      this.setState({pictures: pictures});
+    });
   }
 
   renderGroup(groupName, arr) {
     var images = [];
     for (var i = 0; i < arr.length; i++) {
-      images.push(<Image source={{uri: arr[i].url}} style={styles.image} key={i}></Image>)
+      images.push(<TouchableHighlight onPress={this.viewPhoto.bind(this, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
     }
     return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
   }

@@ -103,7 +103,7 @@ export default {
         return res.json();
       })
       .then(function(resJson) {
-        measurements.push(resJson[0]);
+        measurements.unshift(resJson[0]);
         return resJson;
       });
     });
@@ -128,6 +128,29 @@ export default {
       .then(function() {
         measurements.splice(index, 1);
         return measurements;
+      });
+    });
+  },
+  deletePicture: function(picUrl) {
+    var index = pictures.findIndex((item) => {return item.url === picUrl});
+
+    return this.getToken().then(function(token) {
+      var obj = {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          'url': picUrl
+        })
+      };
+
+      return fetch(url + '/users/pictures/delete', obj)
+      .then(function() {
+        pictures.splice(index, 1);
+        return pictures;
       });
     });
   },
@@ -162,8 +185,12 @@ export default {
         }
       };
       options.body = formData;
-      return fetch(url + '/users/pictures/new', options).then((response) => {
-        console.log(response)
+      return fetch(url + '/users/pictures/new', options).then((res) => {
+        return res.json().then((data) => {
+          if (pictures) {
+            pictures.push(data);
+          }
+        });
       });
     });
   },

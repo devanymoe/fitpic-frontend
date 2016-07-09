@@ -102,7 +102,7 @@ class MeasurePage extends Component {
         var calf =  measures[i].calf;
 
         var renderDate = (
-          <TouchableHighlight onPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer}><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
+          <TouchableHighlight onLongPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer}><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
             <View style={styles.measurement}>
               <Text style={styles.measureValue}>{weight}{unitsWeight}</Text>
               <Text style={styles.measureTitle}>Weight</Text>
