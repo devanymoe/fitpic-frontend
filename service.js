@@ -148,7 +148,7 @@ export default {
     });
   },
   postPicture: function(path, type, date) {
-    return this.getToken.then(function(token) {
+    return this.getToken().then(function(token) {
       var formData = new FormData();
 
       formData.append('image', {uri: path, type: 'image/jpg', name: 'image.jpg'});
