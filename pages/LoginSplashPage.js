@@ -13,13 +13,23 @@ class LoginSplashPage extends Component {
   constructor(props) {
     super(props);
     this.showLogin = this.showLogin.bind(this);
+    this.state = {
+      showLogin: true
+    }
   }
 
   showLogin() {
+    this.setState({showLogin: false});
     Service.showLogin(this.props.onLoggedIn);
   }
 
   render() {
+    if (!this.state.showLogin) {
+      return (
+        <View style={[styles.container, styles.blankContainer]}></View>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <Text>This is the Login Splash Page</Text>
@@ -35,6 +45,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff'
+  },
+  blankContainer: {
+    backgroundColor: '#eee'
   }
 });
 

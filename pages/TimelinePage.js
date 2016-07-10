@@ -32,12 +32,14 @@ class TimelinePage extends Component {
   }
 
   componentDidMount() {
-    Service.getEventsByDates().then((data) => {
-      this.setState({eventsByDates: data});
-      Service.getUser().then(user => {
-        this.setState({user: user});
+    setTimeout(() => {
+      Service.getEventsByDates().then((data) => {
+        this.setState({eventsByDates: data});
+        Service.getUser().then(user => {
+          this.setState({user: user});
+        });
       });
-    });
+    }, 200);
   }
 
   onDateSelect(date) {
@@ -92,7 +94,7 @@ class TimelinePage extends Component {
         if (!events.pictures && !events.measurements) {
           this.setState({dateCard: false});
         }
-        
+
         this.setState({measurements: events.measurements});
         this.setState({pictures: events.pictures});
       });
@@ -100,6 +102,12 @@ class TimelinePage extends Component {
   }
 
   render() {
+    if(!this.state.eventsByDates) {
+      return (
+        <View style={styles.container}></View>
+      )
+    }
+
     var dates = [];
     if (this.state.eventsByDates) {
       for (var key in this.state.eventsByDates) {
@@ -201,7 +209,7 @@ class TimelinePage extends Component {
         <View style={styles.cardContainer}><View style={styles.card}>
         <Calendar
         width={CALWIDTH}
-        scrollEnabled={true}
+        scrollEnabled={false}
         showControls={true}
         titleFormat={'MMMM YYYY'}
         prevButtonText={'Prev'}

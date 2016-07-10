@@ -41,3 +41,4 @@ android/app/libs
 android/keystores/debug.keystore
 
 secrets.js
+android/app/my-release-key.keystore

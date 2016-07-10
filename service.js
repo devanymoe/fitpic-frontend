@@ -6,12 +6,14 @@ var allPicturesMeasures;
 import { AsyncStorage } from 'react-native';
 var Auth0Lock = require('react-native-lock');
 var lock = new Auth0Lock({clientId: Secret.clientId, domain: Secret.domain});
-var url = 'http://192.168.0.106:3000';
+
+var url = 'https://fitpic.herokuapp.com';
+// http://localhost:3000
+// http://192.168.0.106:3000
+
 
 var user;
-
 var userToken;
-// http://localhost:3000
 
 export default {
   getToken: function() {
