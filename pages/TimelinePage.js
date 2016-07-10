@@ -8,7 +8,9 @@ import {
   View,
   TouchableHighlight,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Modal,
+  Image
 } from 'react-native';
 
 const CALWIDTH = Dimensions.get('window').width - 80;
@@ -17,8 +19,14 @@ class TimelinePage extends Component {
   constructor(props) {
     super(props);
     this.onDateSelect = this.onDateSelect.bind(this);
+    this.deletePhoto = this.deletePhoto.bind(this);
+    this.deleteConfirmation = this.deleteConfirmation.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
     this.state = {
-      dateCard: false
+      dateCard: false,
+      activeUrl: '',
+      modalVisible: false,
     };
   }
 
@@ -48,6 +56,41 @@ class TimelinePage extends Component {
     }
   }
 
+  setModalVisible(visible, url) {
+    this.setState({activeUrl: url});
+    this.setState({modalVisible: visible});
+  }
+
+  deletePhoto(url) {
+    Alert.alert(
+      'Delete Picture',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteConfirmation(url)}
+      ]
+    )
+  }
+
+  deleteConfirmation(url) {
+    Alert.alert(
+      'Are you sure you want to delete this picture?',
+      '',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete Entry', onPress: () => this.deleteEntry(url)},
+      ]
+    )
+  }
+
+  deleteEntry(url) {
+    Service.deletePicture(url).then((data) => {
+      Service.getEventsByDates().then((events) => {
+        this.setState({eventsByDates: events});
+      });
+    });
+  }
+
   render() {
     var dates = [];
     if (this.state.eventsByDates) {
@@ -72,8 +115,15 @@ class TimelinePage extends Component {
 
     if (this.state.dateCard) {
       if (this.state.pictures) {
+        var pics = this.state.pictures;
+        var images = [];
+
+        for (var i = 0; i < pics.length; i++) {
+          images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, pics[i].url)} onLongPress={this.deletePhoto.bind(this, pics[i].url)} key={i}><Image source={{uri: pics[i].url}} style={styles.image}></Image></TouchableHighlight>)
+        }
+
         var pics = (
-          <Text>hi</Text>
+          <View style={styles.imageContainer}>{images}</View>
         );
       }
       if (this.state.measurements) {
@@ -125,32 +175,47 @@ class TimelinePage extends Component {
     }
 
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
+        <Modal
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {this.setModalVisible(false, '')}}
+          >
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, false, '')} style={[styles.modalContainer, styles.modalBackground]}>
+            <View>
+              <View style={styles.innerContainer}>
+                <Image source={{uri: this.state.activeUrl}} style={styles.modalImage}/>
+              </View>
+            </View>
+          </TouchableHighlight>
+        </Modal>
+        <ScrollView style={styles.container}>
         <View style={styles.cardContainer}><View style={styles.card}>
-          <Calendar
-            width={CALWIDTH}
-            scrollEnabled={true}
-            showControls={true}
-            titleFormat={'MMMM YYYY'}
-            prevButtonText={'Prev'}
-            nextButtonText={'Next'}
-            onDateSelect={(date) => this.onDateSelect(date)}
-            eventDates={dates}
-            customStyle={{
-              day: {fontSize: 15, textAlign: 'center'},
-              monthContainer: {width: CALWIDTH},
-              dayButton: {width: CALWIDTH / 7},
-              dayButtonFiller: {width: CALWIDTH / 7},
-              calendarContainer: {backgroundColor: '#fff'},
-              currentDayText: {color: '#FD704B'},
-              currentDayCircle: {backgroundColor: '#FD704B'},
-              selectedDayCircle: {backgroundColor: '#FD704B'}
-            }}
-            weekStart={0}
-          />
+        <Calendar
+        width={CALWIDTH}
+        scrollEnabled={true}
+        showControls={true}
+        titleFormat={'MMMM YYYY'}
+        prevButtonText={'Prev'}
+        nextButtonText={'Next'}
+        onDateSelect={(date) => this.onDateSelect(date)}
+        eventDates={dates}
+        customStyle={{
+          day: {fontSize: 15, textAlign: 'center'},
+          monthContainer: {width: CALWIDTH},
+          dayButton: {width: CALWIDTH / 7},
+          dayButtonFiller: {width: CALWIDTH / 7},
+          calendarContainer: {backgroundColor: '#fff'},
+          currentDayText: {color: '#FD704B'},
+          currentDayCircle: {backgroundColor: '#FD704B'},
+          selectedDayCircle: {backgroundColor: '#FD704B'}
+        }}
+        weekStart={0}
+        />
         </View></View>
         {dCard}
-      </ScrollView>
+        </ScrollView>
+      </View>
     )
   }
 }
@@ -194,6 +259,38 @@ var styles = StyleSheet.create({
   measureValue: {
     fontSize: 20,
     color: '#aaa'
+  },
+  innerContainer: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+    marginLeft: 20,
+    marginRight: 20
+  },
+  modalContainer: {
+    backgroundColor: '#eee',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalBackground: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalImage: {
+    width: width - 110,
+    height: (width - 110) * 1.33
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  image: {
+    width: ((width - 110) / 3),
+    height: ((width - 110) / 3),
+    resizeMode: 'cover',
+    marginTop: 10,
+    backgroundColor: '#eee'
   }
 });
 
