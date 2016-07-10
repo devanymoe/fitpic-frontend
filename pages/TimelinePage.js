@@ -1,32 +1,79 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
+import Calendar from 'react-native-calendar';
 import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView,
+  Dimensions
 } from 'react-native';
+
+const CALWIDTH = Dimensions.get('window').width - 80;
 
 class TimelinePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>This is the timeline page</Text>
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.cardContainer}><View style={styles.card}>
+          <Calendar
+            width={CALWIDTH}
+            scrollEnabled={true}
+            showControls={true}
+            titleFormat={'MMMM YYYY'}
+            prevButtonText={'Prev'}
+            nextButtonText={'Next'}
+            onDateSelect={(date) => this.onDateSelect(date)}
+            eventDates={['2016-07-01']}
+            customStyle={{
+              day: {fontSize: 15, textAlign: 'center'},
+              monthContainer: {width: CALWIDTH},
+              dayButton: {width: CALWIDTH / 7},
+              dayButtonFiller: {width: CALWIDTH / 7},
+              calendarContainer: {backgroundColor: '#fff'},
+              currentDayText: {color: '#FD704B'},
+              currentDayCircle: {backgroundColor: '#FD704B'},
+              selectedDayCircle: {backgroundColor: '#FD704B'}
+            }}
+            weekStart={0}
+          />
+        </View></View>
+      </ScrollView>
     )
   }
 }
 
 var styles = StyleSheet.create({
   container: {
+    backgroundColor: '#eee',
+    flex: 1
+  },
+  card: {
+    padding: 20,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    shadowColor: '#000000',
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    padding: 20,
+    paddingBottom: 0
   }
 });
 

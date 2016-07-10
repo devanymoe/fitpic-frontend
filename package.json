@@ -9,6 +9,7 @@
     "lodash.groupby": "^4.4.0",
     "react": "15.1.0",
     "react-native": "0.28.0",
+    "react-native-calendar": "git+https://github.com/devanymoe/react-native-calendar.git",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-chart": "^1.0.6-beta",
     "react-native-datetime": "^0.1.2",
