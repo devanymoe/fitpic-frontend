@@ -91,7 +91,6 @@ class ProgressPage extends Component {
     if (this.state.user) {
       var unitsWeight;
       var unitsLength;
-      console.log(this.state.user)
 
       if (this.state.user.units === 'us') {
         unitsWeight = 'lb';
@@ -162,7 +161,7 @@ class ProgressPage extends Component {
       for (var i = 0; i < weight.length; i++) {
         data.push([weight[i].date, weight[i].weight]);
       }
-      console.log(data)
+
       return (
         <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
           <Chart

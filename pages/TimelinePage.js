@@ -10,7 +10,8 @@ import {
   ScrollView,
   Dimensions,
   Modal,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 
 const CALWIDTH = Dimensions.get('window').width - 80;
@@ -87,6 +88,13 @@ class TimelinePage extends Component {
     Service.deletePicture(url).then((data) => {
       Service.getEventsByDates().then((events) => {
         this.setState({eventsByDates: events});
+
+        if (!events.pictures && !events.measurements) {
+          this.setState({dateCard: false});
+        }
+        
+        this.setState({measurements: events.measurements});
+        this.setState({pictures: events.pictures});
       });
     });
   }
