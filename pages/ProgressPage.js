@@ -29,6 +29,7 @@ class ProgressPage extends Component {
 
   componentDidMount() {
     Service.getProgress().then(data => {
+      console.log(data)
       this.setState({progress: data});
       Service.getUser().then(data => {
         this.setState({user: data});
@@ -49,7 +50,7 @@ class ProgressPage extends Component {
       var pictures = this.state.progress.pictures;
       var imageSections = [];
 
-      if (pictures.first.front !== pictures.last.front) {
+      if (pictures.first.front && pictures.last.front && pictures.first.front !== pictures.last.front) {
         imageSections.push(<View key="front"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.front)}>
@@ -60,7 +61,7 @@ class ProgressPage extends Component {
           </TouchableHighlight>
         </View></View>)
       }
-      if (pictures.first.side !== pictures.last.side) {
+      if (pictures.first.side && pictures.last.side && pictures.first.side !== pictures.last.side) {
         imageSections.push(<View key="side"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.side)}>
@@ -71,7 +72,7 @@ class ProgressPage extends Component {
           </TouchableHighlight>
         </View></View>)
       }
-      if (pictures.first.back !== pictures.last.back) {
+      if (pictures.first.back && pictures.last.back && pictures.first.back !== pictures.last.back) {
         imageSections.push(<View key="back"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.back)}>
@@ -104,7 +105,7 @@ class ProgressPage extends Component {
 
     if (this.state.progress) {
       var measure = this.state.progress.measurements;
-      if (measure.first && measure.last) {
+      if (measure && measure.first.date !== measure.last.date) {
         var weightDiff = measure.last.weight - measure.first.weight;
         var neckDiff = measure.last.neck - measure.first.neck;
         var armDiff = measure.last.arm - measure.first.arm;
@@ -181,7 +182,7 @@ class ProgressPage extends Component {
   }
 
   renderPieChart() {
-    if (this.state.progress) {
+    if (this.state.progress && this.state.progress.measurements && this.state.progress.measurements.first.date !== this.state.progress.measurements.last.date) {
       var measure = this.state.progress.measurements;
       if (measure.first && measure.last) {
         var neckDiff = measure.last.neck - measure.first.neck;

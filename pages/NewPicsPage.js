@@ -75,7 +75,7 @@ class NewPicsPage extends Component {
 
     return (
       <View style={styles.container}>
-        <Spinner visible={this.state.spinner} style={styles.spinner} overlayColor='rgba(0, 0, 0, 0.75)'/>
+        <Spinner visible={this.state.spinner} style={styles.spinner} overlayColor='rgba(0, 0, 0, 0.6)'/>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <DateTimePicker ref={(picker)=>{this.picker=picker}} style={styles.picker}/>
           <View style={styles.inputContainer}>
