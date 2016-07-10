@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Service from '../service';
+import Spinner from 'react-native-loading-spinner-overlay';
 var DateTimePicker = require('react-native-datetime').default;
 import {
   StyleSheet,
@@ -30,7 +31,8 @@ class NewPicsPage extends Component {
     this.state = {
       date: this.props.date || date,
       type: this.props.type || 'front',
-      buttonText: 'Take Picture'
+      buttonText: 'Take Picture',
+      spinner: false
     };
   }
 
@@ -46,8 +48,10 @@ class NewPicsPage extends Component {
   }
 
   postPicture() {
+    this.setState({spinner: true});
     var dateString = new Date(this.state.date).toISOString();
     Service.postPicture(this.props.path, this.state.type, dateString).then(() => {
+      this.setState({spinner: false});
       this.props.navigator.push({name: 'pictures'});
     });
   }
@@ -71,6 +75,7 @@ class NewPicsPage extends Component {
 
     return (
       <View style={styles.container}>
+        <Spinner visible={this.state.spinner} style={styles.spinner} overlayColor='rgba(0, 0, 0, 0.75)'/>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <DateTimePicker ref={(picker)=>{this.picker=picker}} style={styles.picker}/>
           <View style={styles.inputContainer}>
@@ -177,6 +182,13 @@ var styles = StyleSheet.create({
   },
   picker: {
     width: 200
+  },
+  spinner: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });
 

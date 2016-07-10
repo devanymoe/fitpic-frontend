@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "lodash.groupby": "^4.4.0",
     "react": "15.1.0",
     "react-native": "0.28.0",
@@ -14,9 +15,11 @@
     "react-native-chart": "^1.0.6-beta",
     "react-native-datetime": "^0.1.2",
     "react-native-drawer": "^2.2.4",
+    "react-native-loading-spinner-overlay": "^0.2.2",
     "react-native-lock": "^0.3.0",
     "react-native-material-kit": "^0.3.2",
     "react-native-navigation-bar": "^0.1.10",
     "react-native-vector-icons": "^2.0.3"
-  }
+  },
+  "devDependencies": {}
 }
