@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Calendar from 'react-native-calendar';
+import Service from '../service';
 import {
   StyleSheet,
   Text,
@@ -19,10 +20,19 @@ class TimelinePage extends Component {
   }
 
   componentDidMount() {
-
+    Service.getEventsByDates().then((data) => {
+      this.setState({eventsByDates: data});
+    });
   }
 
   render() {
+    var dates = [];
+    if (this.state.eventsByDates) {
+      for (var key in this.state.eventsByDates) {
+        dates.push(key);
+      }
+    }
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.cardContainer}><View style={styles.card}>
@@ -34,7 +44,7 @@ class TimelinePage extends Component {
             prevButtonText={'Prev'}
             nextButtonText={'Next'}
             onDateSelect={(date) => this.onDateSelect(date)}
-            eventDates={['2016-07-01']}
+            eventDates={dates}
             customStyle={{
               day: {fontSize: 15, textAlign: 'center'},
               monthContainer: {width: CALWIDTH},

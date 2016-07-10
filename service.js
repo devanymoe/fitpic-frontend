@@ -276,5 +276,62 @@ export default {
         });
       });
     });
+  },
+  getEventsByDates() {
+    return this.getPictures().then((pictures) => {
+      return this.getMeasurements().then((measures) => {
+        var data = {};
+
+        for (var i = 0; i < pictures.length; i++) {
+          var dateObj = new Date(pictures[i].date)
+          var yearPic = dateObj.getFullYear();
+          var monthPic = dateObj.getMonth() + 1;
+          if (monthPic < 10) {
+            monthPic = '0' + monthPic;
+          }
+          var dayPic = dateObj.getDate();
+          if (dayPic < 10) {
+            dayPic = '0' + dayPic;
+          }
+          var picDate = yearPic + '-' + monthPic + '-' + dayPic;
+
+          if (!data[picDate]) {
+            data[picDate] = {
+              displayDate: monthPic + '/' + dayPic + '/' + yearPic,
+              pictures: [pictures[i]]
+            }
+          }
+          else {
+            data[picDate].pictures.push(pictures[i]);
+          }
+        }
+
+        for (var x = 0; x < measures.length; x++) {
+          var dateObj = new Date(measures[x].date)
+          var yearMeasure = dateObj.getFullYear();
+          var monthMeasure = dateObj.getMonth() + 1;
+          if (monthMeasure < 10) {
+            monthMeasure = '0' + monthMeasure;
+          }
+          var dayMeasure = dateObj.getDate();
+          if (dayMeasure < 10) {
+            dayMeasure = '0' + dayMeasure;
+          }
+          var measureDate = yearMeasure + '-' + monthMeasure + '-' + dayMeasure;
+
+          if (!data[measureDate]) {
+            data[measureDate] = {
+              displayDate: monthMeasure + '/' + dayMeasure + '/' + yearMeasure,
+              measurements: measures[x]
+            }
+          }
+          else {
+            data[measureDate].measurements = measures[x];
+          }
+        }
+
+        return data;
+      });
+    });
   }
 }
