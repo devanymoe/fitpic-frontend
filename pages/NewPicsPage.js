@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Service from '../service';
+var DateTimePicker = require('react-native-datetime').default;
 import {
   StyleSheet,
   Text,
@@ -13,7 +14,10 @@ import {
 } from 'react-native';
 
 var dateObj = new Date();
-var date = dateObj.toISOString();
+var month = dateObj.getMonth() + 1;
+var day = dateObj.getDate();
+var year = dateObj.getFullYear();
+var date = month + '/' + day + '/' + year;
 
 class NewPicsPage extends Component {
   constructor(props) {
@@ -22,6 +26,7 @@ class NewPicsPage extends Component {
     this.cancelPicture = this.cancelPicture.bind(this);
     this.takePicture = this.takePicture.bind(this);
     this.reviewPhoto = this.reviewPhoto.bind(this);
+    this.showDatePicker = this.showDatePicker.bind(this);
     this.state = {
       date: this.props.date || date,
       type: this.props.type || 'front',
@@ -29,8 +34,20 @@ class NewPicsPage extends Component {
     };
   }
 
+  showDatePicker() {
+    var date = new Date(this.state.date);
+    this.picker.showDatePicker(date, (d) => {
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      var year = d.getFullYear();
+      var dateString = month + '/' + day + '/' + year;
+      this.setState({date: dateString});
+    });
+  }
+
   postPicture() {
-    Service.postPicture(this.props.path, this.state.type, this.state.date).then(() => {
+    var dateString = new Date(this.state.date).toISOString();
+    Service.postPicture(this.props.path, this.state.type, dateString).then(() => {
       this.props.navigator.push({name: 'pictures'});
     });
   }
@@ -55,13 +72,14 @@ class NewPicsPage extends Component {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <DateTimePicker ref={(picker)=>{this.picker=picker}} style={styles.picker}/>
           <View style={styles.inputContainer}>
             <View style={styles.label}>
               <Text style={styles.labelText}>
                 Date
               </Text>
             </View>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.input} value={this.state.date} />
+            <Text onPress={this.showDatePicker}  style={styles.input}>{this.state.date}</Text>
           </View>
           <View style={styles.inputContainer}>
             <View style={styles.label}>
@@ -156,6 +174,9 @@ var styles = StyleSheet.create({
   picture: {
     width: 200,
     height: 200,
+  },
+  picker: {
+    width: 200
   }
 });
 

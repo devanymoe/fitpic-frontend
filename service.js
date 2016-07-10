@@ -190,6 +190,7 @@ export default {
           if (pictures) {
             pictures.push(data);
           }
+          return data;
         });
       });
     });

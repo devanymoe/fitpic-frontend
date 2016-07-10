@@ -194,13 +194,13 @@ class ProgressPage extends Component {
         var totalDiff = neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff;
 
         const data = [
-          ['Neck', neckDiff],
-          ['Arm', armDiff],
-          ['Chest', chestDiff],
-          ['Waist', waistDiff],
-          ['Hips', hipsDiff],
-          ['Thigh', thighDiff],
-          ['Calf', calfDiff]
+          ['Neck', neckDiff/totalDiff],
+          ['Arm', armDiff/totalDiff],
+          ['Chest', chestDiff/totalDiff],
+          ['Waist', waistDiff/totalDiff],
+          ['Hips', hipsDiff/totalDiff],
+          ['Thigh', thighDiff/totalDiff],
+          ['Calf', calfDiff/totalDiff]
         ];
 
         return (

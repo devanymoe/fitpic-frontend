@@ -12,7 +12,10 @@ import {
 } from 'react-native';
 
 var dateObj = new Date();
-var date = dateObj.toISOString();
+var month = dateObj.getMonth() + 1;
+var day = dateObj.getDate();
+var year = dateObj.getFullYear();
+var date = month + '/' + day + '/' + year;
 
 class NewMeasuresPage extends Component {
 
@@ -27,15 +30,19 @@ class NewMeasuresPage extends Component {
   }
 
   showDatePicker() {
-    var date = this.state.date;
+    var date = new Date(this.state.date);
     this.picker.showDatePicker(date, (d) => {
-      this.setState({date: d});
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      var year = d.getFullYear();
+      var dateString = month + '/' + day + '/' + year;
+      this.setState({date: dateString});
     });
   }
 
   submitMeasures() {
     var form = {
-      date: this.state.date,
+      date: new Date(this.state.date),
       weight: parseInt(this.state.weight),
       neck: parseInt(this.state.neck),
       arm: parseInt(this.state.arm),
@@ -58,7 +65,6 @@ class NewMeasuresPage extends Component {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Button onPress={this.showDatePicker} type="main" text="open this" />
           <DateTimePicker ref={(picker)=>{this.picker=picker}} style={styles.picker}/>
 
           <View style={styles.inputContainer}>
@@ -67,7 +73,7 @@ class NewMeasuresPage extends Component {
                 Date
               </Text>
             </View>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.input} value={this.state.date} />
+            <Text onPress={this.showDatePicker}  style={styles.input}>{this.state.date}</Text>
           </View>
           <View style={styles.inputContainer}>
             <View style={styles.label}>
