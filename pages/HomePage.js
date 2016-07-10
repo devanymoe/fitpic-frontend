@@ -112,7 +112,7 @@ class HomePage extends Component {
         dates.push(key);
       }
 
-      threeDates = dates.sort().slice(0, 3);
+      threeDates = dates.sort().reverse().slice(0, 3);
 
       for (var i = 0; i < threeDates.length; i++) {
         if (events[threeDates[i]].pictures) {
