@@ -17,7 +17,7 @@ class CameraPage extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.state = {
-
+      show: true
     }
   }
 
@@ -27,6 +27,12 @@ class CameraPage extends Component {
         this.setState({overlay: data[0].url});
       }
     });
+    setTimeout(() => {
+      this.setState({show: false});
+      setTimeout(() => {
+        this.setState({show: true});
+      })
+    }, 200);
   }
 
   goBack() {
@@ -40,8 +46,9 @@ class CameraPage extends Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
+    var camera;
+    if (this.state.show) {
+      camera = (
         <Camera
           ref={(cam) => {
             this.camera = cam;
@@ -51,6 +58,11 @@ class CameraPage extends Component {
           captureTarget={Camera.constants.CaptureTarget.disk}
           >
         </Camera>
+      )
+    }
+    return (
+      <View style={styles.container}>
+        {camera}
         <Image style={styles.cover} source={{uri: this.state.overlay}}></Image>
         <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
         <Button text="back" onPress={this.goBack} type="main"/>
