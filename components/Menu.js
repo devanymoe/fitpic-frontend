@@ -16,7 +16,7 @@ class Menu extends Component {
     this.renderRow = this.renderRow.bind(this);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    const menuItems = [{'title': 'Home', 'icon': 'home'}, {'title': 'Pictures', 'icon': 'photo-camera'}, {'title': 'Measurements', 'icon': 'accessibility'}, {'title': 'Timeline', 'icon': 'event'}, {'title': 'Progress', 'icon': 'show-chart'}, {'title': 'Settings', 'icon': 'settings'}, {'title': 'Help', 'icon': 'help'}, {'title': 'Logout', 'icon': 'power-settings-new'}];
+    const menuItems = [{'title': 'Home', 'icon': 'home'}, {'title': 'Pictures', 'icon': 'photo-camera'}, {'title': 'Measurements', 'icon': 'accessibility'}, {'title': 'Calendar', 'icon': 'event'}, {'title': 'Progress', 'icon': 'show-chart'}, {'title': 'Settings', 'icon': 'settings'}, {'title': 'Help', 'icon': 'help'}, {'title': 'Logout', 'icon': 'power-settings-new'}];
     this.state = {
       dataSource: ds.cloneWithRows(menuItems)
     };
@@ -32,7 +32,7 @@ class Menu extends Component {
     else if (item === 'Measurements') {
       this.props.navigator.push({name: 'measure'});
     }
-    else if (item === 'Timeline') {
+    else if (item === 'Calendar') {
       this.props.navigator.push({name: 'timeline'});
     }
     else if (item === 'Progress') {

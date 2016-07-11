@@ -57,7 +57,7 @@ class App extends Component {
 
   handleBackButton() {
     const navigator = this._navigator;
-    
+
     if (navigator && navigator.getCurrentRoutes().length > 1) {
       navigator.pop();
       return true;
@@ -115,7 +115,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;
     }
     else if (route.name === 'timeline') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Timeline"/><TimelinePage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Calendar"/><TimelinePage navigator={navigator}/></View>;
     }
     else if (route.name === 'progress') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Progress"/><ProgressPage navigator={navigator}/></View>;

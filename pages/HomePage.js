@@ -11,7 +11,9 @@ import {
   Dimensions,
   Modal,
   Image,
-  Alert
+  Alert,
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 class HomePage extends Component {
@@ -115,25 +117,29 @@ class HomePage extends Component {
       threeDates = dates.sort().reverse().slice(0, 3);
 
       for (var i = 0; i < threeDates.length; i++) {
+        let images = [];
+        let measures;
+        let pics;
         if (events[threeDates[i]].pictures) {
           var pictures = events[threeDates[i]].pictures;
-          var images = [];
-          var pics = (
+          pics = (
             <View style={styles.imageContainer}>{images}</View>
           );
 
           for (var x = 0; x < pictures.length; x++) {
             var picture = pictures[x];
-            images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, picture.url)} onLongPress={this.deletePhoto.bind(this, picture.url)} key={x}><Image source={{uri: picture.url}} style={styles.image}></Image></TouchableHighlight>)
+            images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, picture.url)} onLongPress={this.deletePhoto.bind(this, picture.url)} key={x} style={styles.imageTouch}><Image source={{uri: picture.url}} style={styles.image}></Image></TouchableHighlight>)
           }
         }
 
         if (events[threeDates[i]].measurements) {
           var meas = events[threeDates[i]].measurements;
-          var measures = (
+          measures = (
             <View style={styles.measureContainer}>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.weight}{unitsWeight}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.weight}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Weight</Text>
               </View>
               <View style={styles.measurement}>
@@ -170,7 +176,7 @@ class HomePage extends Component {
 
         cards.push((
           <View style={styles.cardContainer} key={i}><View style={styles.card}>
-            <Text>{events[threeDates[i]].displayDate}</Text>
+            <Text style={styles.date}>{events[threeDates[i]].displayDate}</Text>
             {pics}
             {measures}
           </View></View>
@@ -185,45 +191,46 @@ class HomePage extends Component {
           visible={this.state.modalVisible}
           onRequestClose={() => {this.setModalVisible(false, '')}}
           >
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, false, '')} style={[styles.modalContainer, styles.modalBackground]}>
-            <View>
+          <TouchableWithoutFeedback onPress={this.setModalVisible.bind(this, false, '')}>
+            <View style={[styles.modalContainer, styles.modalBackground]}>
               <View style={styles.innerContainer}>
                 <Image source={{uri: this.state.activeUrl}} style={styles.modalImage}/>
               </View>
             </View>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         </Modal>
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
           <View style={styles.tileContainer}>
             <View style={styles.boxRow}>
-              <TouchableHighlight onPress={this.handlePress.bind(this, 'pictures')}>
-                <View style={styles.box}>
-                  <Icon name='photo-camera' size={30} style={styles.icon}/>
+              <TouchableNativeFeedback onPress={this.handlePress.bind(this, 'pictures')}>
+                <View style={[styles.box, styles.boxOne]}>
+                  <Icon name='photo-camera' size={40} style={styles.icon}/>
                   <Text style={styles.boxText}>Pictures</Text>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={this.handlePress.bind(this, 'measure')}>
-                <View style={styles.box}>
-                  <Icon name='accessibility' size={30} style={styles.icon}/>
+              </TouchableNativeFeedback>
+              <TouchableNativeFeedback onPress={this.handlePress.bind(this, 'measure')}>
+                <View style={[styles.box, styles.boxTwo]}>
+                  <Icon name='accessibility' size={40} style={styles.icon}/>
                   <Text style={styles.boxText}>Measurements</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableNativeFeedback>
             </View>
             <View style={styles.boxRow}>
-              <TouchableHighlight onPress={this.handlePress.bind(this, 'timeline')} >
-                <View style={styles.box}>
-                  <Icon name='event' size={30} style={styles.icon}/>
-                  <Text style={styles.boxText}>Timeline</Text>
+              <TouchableNativeFeedback onPress={this.handlePress.bind(this, 'timeline')} >
+                <View style={[styles.box, styles.boxThree]}>
+                  <Icon name='event' size={40} style={styles.icon}/>
+                  <Text style={styles.boxText}>Calendar</Text>
                 </View>
-              </TouchableHighlight>
-              <TouchableHighlight onPress={this.handlePress.bind(this, 'progress')}>
-                <View style={styles.box}>
-                  <Icon name='show-chart' size={30} style={styles.icon}/>
+              </TouchableNativeFeedback>
+              <TouchableNativeFeedback onPress={this.handlePress.bind(this, 'progress')}>
+                <View style={[styles.box, styles.boxFour]}>
+                  <Icon name='show-chart' size={40} style={styles.icon}/>
                   <Text style={styles.boxText}>Progress</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableNativeFeedback>
             </View>
           </View>
+          <Text style={styles.sectionTitle}>Recent Activity</Text>
           {cards}
         </ScrollView>
       </View>
@@ -252,18 +259,22 @@ var styles = StyleSheet.create({
     flexDirection: 'row'
   },
   boxText: {
-    color: '#000',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   tileContainer: {
-    marginBottom: 10,
+    marginBottom: 20,
     paddingBottom: 20,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#ddd',
     borderBottomWidth: 1,
     paddingTop: 10,
     alignItems: 'center',
+    backgroundColor: '#fff'
   },
   icon: {
-    marginBottom: 16
+    marginBottom: 8,
+    color: '#fff'
   },
   card: {
     padding: 20,
@@ -279,8 +290,9 @@ var styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: 'row',
-    padding: 20,
-    paddingBottom: 0
+    paddingBottom: 20,
+    paddingLeft: 20,
+    paddingRight: 20
   },
   measureContainer: {
     flexDirection: 'row',
@@ -301,7 +313,7 @@ var styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 10,
     marginLeft: 20,
     marginRight: 20
   },
@@ -315,8 +327,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalImage: {
-    width: width - 110,
-    height: (width - 110) * 1.33
+    width: width - 90,
+    height: (width - 90) * 1.33
   },
   imageContainer: {
     flexDirection: 'row',
@@ -327,8 +339,40 @@ var styles = StyleSheet.create({
     width: ((width - 110) / 3),
     height: ((width - 110) / 3),
     resizeMode: 'cover',
-    marginTop: 10,
     backgroundColor: '#eee'
+  },
+  imageTouch: {
+    marginTop: 10
+  },
+  boxOne: {
+    backgroundColor: '#ff8f72'
+  },
+  boxTwo: {
+    backgroundColor: '#4ECDC4'
+  },
+  boxThree: {
+    backgroundColor: '#23DBEF'
+  },
+  boxFour: {
+    backgroundColor: '#FEB95F'
+  },
+  scrollView: {
+    paddingBottom: 20
+  },
+  sectionTitle: {
+    marginLeft: 20,
+    paddingBottom: 14,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#aaa'
+  },
+  date: {
+    color: '#aaa',
+    fontSize: 16
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
   }
 });
 

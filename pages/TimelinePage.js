@@ -205,31 +205,31 @@ class TimelinePage extends Component {
             </View>
           </TouchableHighlight>
         </Modal>
-        <ScrollView style={styles.container}>
-        <View style={styles.cardContainer}><View style={styles.card}>
-        <Calendar
-        width={CALWIDTH}
-        scrollEnabled={false}
-        showControls={true}
-        titleFormat={'MMMM YYYY'}
-        prevButtonText={'Prev'}
-        nextButtonText={'Next'}
-        onDateSelect={(date) => this.onDateSelect(date)}
-        eventDates={dates}
-        customStyle={{
-          day: {fontSize: 15, textAlign: 'center'},
-          monthContainer: {width: CALWIDTH},
-          dayButton: {width: CALWIDTH / 7},
-          dayButtonFiller: {width: CALWIDTH / 7},
-          calendarContainer: {backgroundColor: '#fff'},
-          currentDayText: {color: '#FD704B'},
-          currentDayCircle: {backgroundColor: '#FD704B'},
-          selectedDayCircle: {backgroundColor: '#FD704B'}
-        }}
-        weekStart={0}
-        />
-        </View></View>
-        {dCard}
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.cardContainer}><View style={styles.card}>
+          <Calendar
+          width={CALWIDTH}
+          scrollEnabled={false}
+          showControls={true}
+          titleFormat={'MMMM YYYY'}
+          prevButtonText={'Prev'}
+          nextButtonText={'Next'}
+          onDateSelect={(date) => this.onDateSelect(date)}
+          eventDates={dates}
+          customStyle={{
+            day: {fontSize: 15, textAlign: 'center'},
+            monthContainer: {width: CALWIDTH},
+            dayButton: {width: CALWIDTH / 7},
+            dayButtonFiller: {width: CALWIDTH / 7},
+            calendarContainer: {backgroundColor: '#fff'},
+            currentDayText: {color: '#FD704B'},
+            currentDayCircle: {backgroundColor: '#FD704B'},
+            selectedDayCircle: {backgroundColor: '#FD704B'}
+          }}
+          weekStart={0}
+          />
+          </View></View>
+          {dCard}
         </ScrollView>
       </View>
     )
@@ -242,6 +242,11 @@ var styles = StyleSheet.create({
   container: {
     backgroundColor: '#eee',
     flex: 1
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingBottom: 20
   },
   card: {
     padding: 20,
@@ -257,8 +262,8 @@ var styles = StyleSheet.create({
   },
   cardContainer: {
     flexDirection: 'row',
-    padding: 20,
-    paddingBottom: 0
+    paddingBottom: 0,
+    padding: 20
   },
   measureContainer: {
     flexDirection: 'row',
