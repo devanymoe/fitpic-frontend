@@ -8,7 +8,8 @@ import {
   Text,
   TouchableHighlight,
   Image,
-  View
+  View,
+  Slider
 } from 'react-native';
 import Camera from 'react-native-camera';
 
@@ -17,7 +18,8 @@ class CameraPage extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.state = {
-      show: true
+      show: true,
+      value: 0.4
     }
   }
 
@@ -63,9 +65,15 @@ class CameraPage extends Component {
     return (
       <View style={styles.container}>
         {camera}
-        <Image style={styles.cover} source={{uri: this.state.overlay}}></Image>
+        <Image style={[styles.cover, {opacity: this.state.value}]} source={{uri: this.state.overlay}}></Image>
         <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
         <Button text="back" onPress={this.goBack} type="main"/>
+        <Slider
+          onValueChange={(value) => this.setState({value: value})}
+          style={styles.slider}
+          value={0.4}
+          maximumValue={0.8}
+          />
       </View>
     );
   }
@@ -106,11 +114,14 @@ const styles = StyleSheet.create({
     margin: 40
   },
   cover: {
-    opacity: 0.3,
+    // opacity: 0.3,
     height: width * 1.33,
     width: width,
     position: 'absolute',
     top: 0
+  },
+  slider: {
+    width: 200
   }
 });
 
