@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Service from '../service';
-import Chart from 'react-native-chart';
 import {
   StyleSheet,
   Text,
@@ -157,25 +156,41 @@ class ProgressPage extends Component {
   renderWeight() {
     if (this.state.weight && this.state.weight.length > 1) {
       var weight = this.state.weight;
-      const data = [];
+      var axis = '';
+      var data = '';
+      var low = 0;
+      var high = 0;
 
       for (var i = 0; i < weight.length; i++) {
-        data.push([weight[i].date, weight[i].weight]);
+        if (low === 0 && high === 0) {
+          low = weight[i].weight;
+          high = weight[i].weight;
+        }
+
+        if (!data.length) {
+          data += weight[i].weight;
+        }
+        else {
+          data = data + ',' + weight[i].weight;
+        }
+
+        if (weight[i].weight < low) {
+          low = weight[i].weight;
+        }
+        if (weight[i].weight > high) {
+          high = weight[i].weight;
+        }
+
+        axis = axis + '|' + weight[i].date;
       }
+
+      var chartUrl = 'http://chart.apis.google.com/chart?cht=bhg&chs=550x230&chd=t:' + data + '&chxt=x,y&chxl=1:' + axis + '&chxr=0,' + (low - 20) + ',' + (high + 20) + '&chds=' + (low - 20) + ',' + (high + 20) + '&chco=FD704B&chbh=35,0,15';
+      console.log(chartUrl)
 
       return (
         <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
-          <Chart
-            style={styles.chart}
-            data={data}
-            verticalGridStep={4}
-            type="line"
-            lineWidth={2}
-            showDataPoint={true}
-            xAxisHeight={16}
-            yAxisWidth={30}
-            color="#FD704B"
-          />
+          <Text style={styles.chartTitle}>Weight by Date</Text>
+          <Image source={{uri: chartUrl}} style={styles.chart}/>
         </View></View>
       )
     }
@@ -185,33 +200,21 @@ class ProgressPage extends Component {
     if (this.state.progress && this.state.progress.measurements && this.state.progress.measurements.first.date !== this.state.progress.measurements.last.date) {
       var measure = this.state.progress.measurements;
       if (measure.first && measure.last) {
-        var neckDiff = measure.last.neck - measure.first.neck;
-        var armDiff = measure.last.arm - measure.first.arm;
-        var chestDiff = measure.last.chest - measure.first.chest;
-        var waistDiff = measure.last.waist - measure.first.waist;
-        var hipsDiff = measure.last.hips - measure.first.hips;
-        var thighDiff = measure.last.thigh - measure.first.thigh;
-        var calfDiff = measure.last.calf - measure.first.calf;
-        var totalDiff = neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff;
+        var neckDiff = Math.abs(measure.last.neck - measure.first.neck);
+        var armDiff = Math.abs(measure.last.arm - measure.first.arm);
+        var chestDiff = Math.abs(measure.last.chest - measure.first.chest);
+        var waistDiff = Math.abs(measure.last.waist - measure.first.waist);
+        var hipsDiff = Math.abs(measure.last.hips - measure.first.hips);
+        var thighDiff = Math.abs(measure.last.thigh - measure.first.thigh);
+        var calfDiff = Math.abs(measure.last.calf - measure.first.calf);
+        var totalDiff = Math.abs(neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff);
 
-        const data = [
-          ['Neck', neckDiff/totalDiff],
-          ['Arm', armDiff/totalDiff],
-          ['Chest', chestDiff/totalDiff],
-          ['Waist', waistDiff/totalDiff],
-          ['Hips', hipsDiff/totalDiff],
-          ['Thigh', thighDiff/totalDiff],
-          ['Calf', calfDiff/totalDiff]
-        ];
+        var chartUrl = 'https://chart.googleapis.com/chart?cht=p&chd=t:' + `${hipsDiff},${armDiff},${chestDiff},${waistDiff},${neckDiff},${thighDiff},${calfDiff}` + '&chs=450x300&chl=Hips|Arm|Chest|Waist|Neck|Thigh|Calf&chxs=0,999999,16&chxt=x&chco=ff663e|ff7a57|ff8f72|ffab95|febfae|ffd1c5|ffe2db';
 
         return (
           <View key="progress-chart" style={styles.cardContainer}><View style={styles.card}>
-            <Chart
-              style={styles.chart}
-              data={data}
-              type="pie"
-              showAxis={false}
-            />
+            <Text style={styles.chartTitle}>Difference by Measurements</Text>
+            <Image source={{uri: chartUrl}} style={styles.chart}/>
           </View></View>
         )
       }
@@ -307,9 +310,9 @@ var styles = StyleSheet.create({
     backgroundColor: '#eee'
   },
   chart: {
-    width: width - 110,
-    height: 160,
-    marginTop: 10
+    width: width - 80,
+    height: (width - 80) / 1.5,
+    resizeMode: 'contain'
   },
   innerContainer: {
     alignItems: 'center',
