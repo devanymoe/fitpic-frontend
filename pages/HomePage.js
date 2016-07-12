@@ -132,6 +132,12 @@ class HomePage extends Component {
           }
         }
 
+        if (events[threeDates[i]].pictures && events[threeDates[i]].measurements) {
+          var splitter = (
+            <View style={styles.splitter}></View>
+          );
+        }
+
         if (events[threeDates[i]].measurements) {
           var meas = events[threeDates[i]].measurements;
           measures = (
@@ -192,6 +198,7 @@ class HomePage extends Component {
           <View style={styles.cardContainer} key={i}><View style={styles.card}>
             <Text style={styles.date}>{events[threeDates[i]].displayDate}</Text>
             {pics}
+            {splitter}
             {measures}
           </View></View>
         ))
@@ -401,6 +408,13 @@ var styles = StyleSheet.create({
     marginBottom: 2,
     color: '#FD704B',
     fontSize: 16
+  },
+  splitter: {
+    height: 1,
+    marginRight: 20,
+    backgroundColor: '#eee',
+    marginTop: 20,
+    marginBottom: 7
   }
 });
 

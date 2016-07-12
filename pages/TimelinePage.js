@@ -142,6 +142,13 @@ class TimelinePage extends Component {
           <View style={styles.imageContainer}>{images}</View>
         );
       }
+
+      if (this.state.pictures && this.state.measurements) {
+        var splitter = (
+          <View style={styles.splitter}></View>
+        );
+      }
+
       if (this.state.measurements) {
         var meas = this.state.measurements;
         var measures = (
@@ -201,6 +208,7 @@ class TimelinePage extends Component {
         <View style={styles.cardContainer}><View style={styles.card}>
           <Text>{this.state.displayDate}</Text>
           {pics}
+          {splitter}
           {measures}
         </View></View>
       )
@@ -351,6 +359,13 @@ var styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5,
     marginRight: 15
+  },
+  splitter: {
+    height: 1,
+    marginRight: 20,
+    backgroundColor: '#eee',
+    marginTop: 20,
+    marginBottom: 7
   }
 });
 
