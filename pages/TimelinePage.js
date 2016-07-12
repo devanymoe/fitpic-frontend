@@ -206,7 +206,7 @@ class TimelinePage extends Component {
       }
       var dCard = (
         <View style={styles.cardContainer}><View style={styles.card}>
-          <Text>{this.state.displayDate}</Text>
+          <Text style={styles.date}>{this.state.displayDate}</Text>
           {pics}
           {splitter}
           {measures}
@@ -366,6 +366,10 @@ var styles = StyleSheet.create({
     backgroundColor: '#eee',
     marginTop: 20,
     marginBottom: 7
+  },
+  date: {
+    color: '#aaa',
+    fontSize: 16
   }
 });
 

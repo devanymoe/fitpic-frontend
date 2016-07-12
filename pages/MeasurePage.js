@@ -102,7 +102,7 @@ class MeasurePage extends Component {
         var calf =  measures[i].calf;
 
         var renderDate = (
-          <TouchableHighlight onLongPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer} underlayColor="#eee"><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
+          <TouchableHighlight onLongPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer} underlayColor="#eee"><View style={styles.card}><Text style={styles.date}>{date}</Text><View style={styles.measureContainer}>
             <View style={[styles.measurement, styles.measurementFirst]}>
               <View style={styles.inline}>
                 <Text style={styles.measureValue}>{weight}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
@@ -226,6 +226,10 @@ var styles = StyleSheet.create({
   inline: {
     flexDirection: 'row',
     alignItems: 'flex-end'
+  },
+  date: {
+    color: '#aaa',
+    fontSize: 16
   }
 });
 

@@ -84,7 +84,7 @@ class PicturesPage extends Component {
     for (var i = 0; i < arr.length; i++) {
       images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i} style={styles.imageTouch}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
     }
-    return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
+    return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text style={styles.date}>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
   }
 
   render() {
@@ -184,6 +184,10 @@ var styles = StyleSheet.create({
   modalImage: {
     width: width - 90,
     height: (width - 90) * 1.33
+  },
+  date: {
+    color: '#aaa',
+    fontSize: 16
   }
 });
 
