@@ -6,7 +6,8 @@ import {
   Text,
   View,
   ListView,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 class Menu extends Component {
@@ -51,7 +52,7 @@ class Menu extends Component {
 
   renderRow(rowData) {
     return (
-      <TouchableHighlight onPress={this.handlePress.bind(this, rowData.title)} style={menuStyles.menuItem} item={rowData.title}>
+      <TouchableHighlight onPress={this.handlePress.bind(this, rowData.title)} style={menuStyles.menuItem} item={rowData.title} underlayColor='#fff'>
         <View style={menuStyles.rowView}>
           <View style={menuStyles.iconContainer}>
             <Icon name={rowData.icon} size={20} />

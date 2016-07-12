@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import Service from '../service';
 import Spinner from 'react-native-loading-spinner-overlay';
 var DateTimePicker = require('react-native-datetime').default;
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   StyleSheet,
   Text,
@@ -11,7 +12,8 @@ import {
   TextInput,
   ScrollView,
   Picker,
-  Image
+  Image,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 var dateObj = new Date();
@@ -32,7 +34,7 @@ class NewPicsPage extends Component {
       date: this.props.date || date,
       type: this.props.type || 'front',
       buttonText: 'Take Picture',
-      spinner: false
+      spinner: false,
     };
   }
 
@@ -73,6 +75,14 @@ class NewPicsPage extends Component {
       var picture = (<TouchableHighlight onPress={this.reviewPhoto}><Image style={styles.picture} source={{uri: this.props.path}}></Image></TouchableHighlight>);
     }
 
+    if(!this.props.path) {
+      var camButton = (
+        <TouchableWithoutFeedback onPress={this.takePicture}>
+          <Icon name='photo-camera' size={30} style={styles.icon}/>
+        </TouchableWithoutFeedback>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <Spinner visible={this.state.spinner} style={styles.spinner} overlayColor='rgba(0, 0, 0, 0.6)'/>
@@ -103,7 +113,6 @@ class NewPicsPage extends Component {
               <Picker.Item label="Side Flex" value="side-flex" />
               <Picker.Item label="Back Flex" value="back-flex" />
             </Picker>
-            <Text style={styles.input}>{this.state.type}</Text>
           </View>
           <View style={styles.inputContainer}>
             <View style={styles.label}>
@@ -114,16 +123,18 @@ class NewPicsPage extends Component {
             <View style={styles.photoButtonContainer}>
               <View style={styles.photoButton}>
                 {picture}
-                <Button type="main" text={this.state.buttonText} onPress={this.takePicture}/>
+                {camButton}
               </View>
             </View>
           </View>
 
 
           <View style={styles.buttonContainer}>
-            <Button onPress={this.postPicture} type="main" text="Submit" />
-            <Button onPress={this.cancelPicture} type="gray" text="Cancel" />
+            <Button onPress={this.postPicture} type="mainLarge" text="Submit" textStyle="large"/>
           </View>
+          <View style={[styles.buttonContainer, styles.bottomButton]}>
+            <Button onPress={this.cancelPicture} type="grayLarge" text="Cancel" textStyle="large"/>
+            </View>
         </ScrollView>
       </View>
     )
@@ -144,16 +155,20 @@ var styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     height: 30,
-    padding: 0
+    padding: 0,
+    color: '#000',
+    marginTop: 8,
+    fontSize: 15
   },
   inputContainer: {
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
-    padding: 10,
+    paddingLeft: 14,
+    paddingRight: 14,
     paddingTop: 12,
     paddingBottom: 12,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   label: {
@@ -162,26 +177,33 @@ var styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 16,
-    color: '#1c1c1c'
+    color: '#666',
+    fontWeight: 'bold'
   },
   buttonContainer: {
-
+    paddingTop: 16,
+    paddingLeft: 14,
+    paddingRight: 14
+  },
+  bottomButton: {
+    marginTop: -4
   },
   photoButtonContainer: {
-    flex: 1
+    paddingTop: 8,
+    paddingBottom: 8,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start'
   },
   photoButton: {
     justifyContent: 'flex-end'
   },
   picker: {
-    width: 200
+    width: 140,
+    marginRight: -16
   },
   picture: {
     width: 200,
     height: 200,
-  },
-  picker: {
-    width: 200
   },
   spinner: {
     position: 'absolute',

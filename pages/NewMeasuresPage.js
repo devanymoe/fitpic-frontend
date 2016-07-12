@@ -140,8 +140,10 @@ class NewMeasuresPage extends Component {
             <TextInput underlineColorAndroid='rgba(0,0,0,0)' keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({calf: text})}/>
           </View>
           <View style={styles.buttonContainer}>
-            <Button type="main" text="Submit" onPress={this.submitMeasures}/>
-            <Button type="gray" text="Cancel" onPress={this.cancelMeasures}/>
+            <Button type="mainLarge" text="Submit" textStyle="large" onPress={this.submitMeasures}/>
+          </View>
+          <View style={[styles.buttonContainer, styles.bottomButton]}>
+            <Button type="grayLarge" text="Cancel" textStyle="large" onPress={this.cancelMeasures}/>
           </View>
         </ScrollView>
       </View>
@@ -163,12 +165,16 @@ var styles = StyleSheet.create({
     flex: 1,
     textAlign: 'right',
     height: 30,
-    padding: 0
+    padding: 0,
+    color: '#000',
+    marginTop: 8,
+    fontSize: 15
   },
   inputContainer: {
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
-    padding: 10,
+    paddingLeft: 14,
+    paddingRight: 14,
     paddingTop: 12,
     paddingBottom: 12,
     flexDirection: 'row',
@@ -181,10 +187,16 @@ var styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 16,
-    color: '#1c1c1c'
+    color: '#666',
+    fontWeight: 'bold'
   },
   buttonContainer: {
-
+    paddingTop: 16,
+    paddingLeft: 14,
+    paddingRight: 14
+  },
+  bottomButton: {
+    marginTop: -4
   },
   picker: {
     width: 200

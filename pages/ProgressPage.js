@@ -52,10 +52,10 @@ class ProgressPage extends Component {
       if (pictures.first.front && pictures.last.front && pictures.first.front !== pictures.last.front) {
         imageSections.push(<View key="front"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.front)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.front)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.front}}/>
           </TouchableHighlight>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.front)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.front)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.last.front}}/>
           </TouchableHighlight>
         </View></View>)
@@ -63,10 +63,10 @@ class ProgressPage extends Component {
       if (pictures.first.side && pictures.last.side && pictures.first.side !== pictures.last.side) {
         imageSections.push(<View key="side"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.side)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.side)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.side}}/>
           </TouchableHighlight>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.side)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.side)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.last.side}}/>
           </TouchableHighlight>
         </View></View>)
@@ -74,10 +74,10 @@ class ProgressPage extends Component {
       if (pictures.first.back && pictures.last.back && pictures.first.back !== pictures.last.back) {
         imageSections.push(<View key="back"><Text>Front Progress</Text>
         <View style={styles.imageContainer}>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.back)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.back)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.back}}/>
           </TouchableHighlight>
-          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.back)}>
+          <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.last.back)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.last.back}}/>
           </TouchableHighlight>
         </View></View>)
@@ -303,11 +303,13 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   image: {
-    width: ((width - 110) / 2),
-    height: ((width - 110) / 2),
+    width: ((width - 98) / 2),
+    height: ((width - 98) / 2),
     resizeMode: 'cover',
-    marginTop: 10,
     backgroundColor: '#eee'
+  },
+  imageTouch: {
+    marginTop: 10,
   },
   chart: {
     width: width - 80,
@@ -317,7 +319,7 @@ var styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 10,
     marginLeft: 20,
     marginRight: 20
   },
@@ -331,8 +333,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalImage: {
-    width: width - 110,
-    height: (width - 110) * 1.33
+    width: width - 90,
+    height: (width - 90) * 1.33
   }
 });
 

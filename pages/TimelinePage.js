@@ -135,7 +135,7 @@ class TimelinePage extends Component {
         var images = [];
 
         for (var i = 0; i < pics.length; i++) {
-          images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, pics[i].url)} onLongPress={this.deletePhoto.bind(this, pics[i].url)} key={i}><Image source={{uri: pics[i].url}} style={styles.image}></Image></TouchableHighlight>)
+          images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, pics[i].url)} onLongPress={this.deletePhoto.bind(this, pics[i].url)} key={i} style={styles.imageTouch}><Image source={{uri: pics[i].url}} style={styles.image}></Image></TouchableHighlight>)
         }
 
         var pics = (
@@ -146,36 +146,52 @@ class TimelinePage extends Component {
         var meas = this.state.measurements;
         var measures = (
           <View style={styles.measureContainer}>
-            <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.weight}{unitsWeight}</Text>
+            <View style={[styles.measurement, styles.measurementFirst]}>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.weight}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
+              </View>
               <Text style={styles.measureTitle}>Weight</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.neck}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.neck}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Neck</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.arm}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.arm}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Bicep</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.chest}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.chest}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Chest</Text>
             </View>
-            <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.waist}{unitsLength}</Text>
+            <View style={[styles.measurement, styles.measurementFirst]}>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.waist}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Waist</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.hips}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.hips}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Hips</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.thigh}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.thigh}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Thigh</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{meas.calf}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{meas.calf}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Calf</Text>
             </View>
           </View>
@@ -206,7 +222,7 @@ class TimelinePage extends Component {
           </TouchableHighlight>
         </Modal>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.cardContainer}><View style={styles.card}>
+          <View style={styles.cardContainer}><View style={[styles.card, styles.calCard]}>
           <Calendar
           width={CALWIDTH}
           scrollEnabled={false}
@@ -249,7 +265,9 @@ var styles = StyleSheet.create({
     paddingBottom: 20
   },
   card: {
-    padding: 20,
+    paddingLeft: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
     flex: 1,
     backgroundColor: '#fff',
     shadowColor: '#000000',
@@ -260,6 +278,9 @@ var styles = StyleSheet.create({
       width: 0
     }
   },
+  calCard: {
+    padding: 20
+  },
   cardContainer: {
     flexDirection: 'row',
     paddingBottom: 0,
@@ -268,23 +289,29 @@ var styles = StyleSheet.create({
   measureContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    paddingRight: 20
   },
   measurement: {
     width: ((width - 80) / 4),
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'space-between',
+    paddingLeft: 14
+  },
+  measurementFirst: {
+    paddingLeft: 0
   },
   measureTitle: {
-
+    color: '#aaa'
   },
   measureValue: {
-    fontSize: 20,
-    color: '#aaa'
+    fontSize: 24,
+    color: '#FD704B'
   },
   innerContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 10,
     marginLeft: 20,
     marginRight: 20
   },
@@ -298,20 +325,32 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalImage: {
-    width: width - 110,
-    height: (width - 110) * 1.33
+    width: width - 90,
+    height: (width - 90) * 1.33
   },
   imageContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    flexWrap: 'wrap'
   },
   image: {
     width: ((width - 110) / 3),
     height: ((width - 110) / 3),
     resizeMode: 'cover',
-    marginTop: 10,
     backgroundColor: '#eee'
+  },
+  measureUnit: {
+    marginBottom: 2,
+    color: '#FD704B',
+    fontSize: 16
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  imageTouch: {
+    marginTop: 10,
+    marginBottom: 5,
+    marginRight: 15
   }
 });
 

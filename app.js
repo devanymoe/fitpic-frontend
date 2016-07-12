@@ -103,7 +103,7 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="FitPic"/><HomePage navigator={navigator} /></View>;
     }
     else if (route.name === 'pictures') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)} underlayColor="#FD704B"><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
       content = <CameraPage navigator={navigator} type={route.type} date={route.date}/>;
@@ -112,7 +112,7 @@ class App extends Component {
       content = <PhotoDraftPage navigator={navigator} path={route.path} date={route.date} type={route.type}/>;
     }
     else if (route.name === 'measure') {
-      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)}><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;
+      content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Measurements" right={<TouchableHighlight onPress={this.handleNewMeasure.bind(this, navigator)} underlayColor="#FD704B"><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><MeasurePage navigator={navigator}/></View>;
     }
     else if (route.name === 'timeline') {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Calendar"/><TimelinePage navigator={navigator}/></View>;

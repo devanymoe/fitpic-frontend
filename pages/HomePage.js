@@ -136,38 +136,52 @@ class HomePage extends Component {
           var meas = events[threeDates[i]].measurements;
           measures = (
             <View style={styles.measureContainer}>
-              <View style={styles.measurement}>
+              <View style={[styles.measurement, styles.measurementFirst]}>
                 <View style={styles.inline}>
                   <Text style={styles.measureValue}>{meas.weight}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
                 </View>
                 <Text style={styles.measureTitle}>Weight</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.neck}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.neck}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Neck</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.arm}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.arm}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Bicep</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.chest}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.chest}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Chest</Text>
               </View>
-              <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.waist}{unitsLength}</Text>
+              <View style={[styles.measurement, styles.measurementFirst]}>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.waist}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Waist</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.hips}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.hips}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Hips</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.thigh}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.thigh}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Thigh</Text>
               </View>
               <View style={styles.measurement}>
-                <Text style={styles.measureValue}>{meas.calf}{unitsLength}</Text>
+                <View style={styles.inline}>
+                  <Text style={styles.measureValue}>{meas.calf}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+                </View>
                 <Text style={styles.measureTitle}>Calf</Text>
               </View>
             </View>
@@ -277,7 +291,9 @@ var styles = StyleSheet.create({
     color: '#fff'
   },
   card: {
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 20,
     flex: 1,
     backgroundColor: '#fff',
     shadowColor: '#000000',
@@ -297,18 +313,24 @@ var styles = StyleSheet.create({
   measureContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    paddingRight: 20
   },
   measurement: {
     width: ((width - 80) / 4),
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'space-between',
+    paddingLeft: 14
+  },
+  measurementFirst: {
+    paddingLeft: 0
   },
   measureTitle: {
-
+    color: '#aaa'
   },
   measureValue: {
-    fontSize: 20,
-    color: '#aaa'
+    fontSize: 24,
+    color: '#FD704B'
   },
   innerContainer: {
     alignItems: 'center',
@@ -332,8 +354,7 @@ var styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    flexWrap: 'wrap'
   },
   image: {
     width: ((width - 110) / 3),
@@ -342,19 +363,21 @@ var styles = StyleSheet.create({
     backgroundColor: '#eee'
   },
   imageTouch: {
-    marginTop: 10
+    marginTop: 10,
+    marginBottom: 5,
+    marginRight: 15
   },
   boxOne: {
-    backgroundColor: '#ff8f72'
+    backgroundColor: '#ffab95'
   },
   boxTwo: {
-    backgroundColor: '#4ECDC4'
+    backgroundColor: '#ffab95'
   },
   boxThree: {
-    backgroundColor: '#23DBEF'
+    backgroundColor: '#ffab95'
   },
   boxFour: {
-    backgroundColor: '#FEB95F'
+    backgroundColor: '#ffab95'
   },
   scrollView: {
     paddingBottom: 20
@@ -373,6 +396,11 @@ var styles = StyleSheet.create({
   inline: {
     flexDirection: 'row',
     alignItems: 'flex-end'
+  },
+  measureUnit: {
+    marginBottom: 2,
+    color: '#FD704B',
+    fontSize: 16
   }
 });
 

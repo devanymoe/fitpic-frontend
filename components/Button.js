@@ -11,7 +11,7 @@ class Button extends Component {
     return (
       <TouchableHighlight onPress={this.props.onPress}>
         <View style={[styles.button, styles[this.props.type]]}>
-          <Text style={styles.buttonText}>{this.props.text}</Text>
+          <Text style={[styles.buttonText, styles[this.props.textStyle]]}>{this.props.text}</Text>
         </View>
       </TouchableHighlight>
     )
@@ -33,6 +33,20 @@ var styles = StyleSheet.create({
   },
   gray: {
     backgroundColor: '#999'
+  },
+  mainLarge: {
+    paddingTop: 14,
+    paddingBottom: 14,
+    backgroundColor: '#FD704B'
+  },
+  grayLarge: {
+    paddingTop: 14,
+    paddingBottom: 14,
+    backgroundColor: '#999'
+  },
+  large: {
+    fontWeight: 'bold',
+    fontSize: 15
   }
 });
 

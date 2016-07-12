@@ -102,37 +102,53 @@ class MeasurePage extends Component {
         var calf =  measures[i].calf;
 
         var renderDate = (
-          <TouchableHighlight onLongPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer}><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
-            <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{weight}{unitsWeight}</Text>
+          <TouchableHighlight onLongPress={this.clickMeasure.bind(this, measures[i].id)} key={measures[i].id} style={styles.cardContainer} underlayColor="#eee"><View style={styles.card}><Text>{date}</Text><View style={styles.measureContainer}>
+            <View style={[styles.measurement, styles.measurementFirst]}>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{weight}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
+              </View>
               <Text style={styles.measureTitle}>Weight</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{neck}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{neck}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Neck</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{arm}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{arm}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Bicep</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{chest}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{chest}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Chest</Text>
             </View>
-            <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{waist}{unitsLength}</Text>
+            <View style={[styles.measurement, styles.measurementFirst]}>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{waist}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Waist</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{hips}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{hips}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Hips</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{thigh}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{thigh}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Thigh</Text>
             </View>
             <View style={styles.measurement}>
-              <Text style={styles.measureValue}>{calf}{unitsLength}</Text>
+              <View style={styles.inline}>
+                <Text style={styles.measureValue}>{calf}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+              </View>
               <Text style={styles.measureTitle}>Calf</Text>
             </View>
           </View></View></TouchableHighlight>
@@ -176,26 +192,40 @@ var styles = StyleSheet.create({
       width: 0
     }
   },
-  measureContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  },
   cardContainer: {
     flexDirection: 'row',
     padding: 20,
     paddingBottom: 0
   },
+  measureContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
   measurement: {
     width: ((width - 80) / 4),
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'space-between',
+    paddingLeft: 14
+  },
+  measurementFirst: {
+    paddingLeft: 0
   },
   measureTitle: {
-
+    color: '#aaa'
   },
   measureValue: {
-    fontSize: 20,
-    color: '#aaa'
+    fontSize: 24,
+    color: '#FD704B'
+  },
+  measureUnit: {
+    marginBottom: 2,
+    color: '#FD704B',
+    fontSize: 16
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
   }
 });
 

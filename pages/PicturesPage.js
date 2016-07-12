@@ -82,7 +82,7 @@ class PicturesPage extends Component {
   renderGroup(groupName, arr) {
     var images = [];
     for (var i = 0; i < arr.length; i++) {
-      images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
+      images.push(<TouchableHighlight onPress={this.setModalVisible.bind(this, true, arr[i].url)} onLongPress={this.deletePhoto.bind(this, arr[i].url)} key={i} style={styles.imageTouch}><Image source={{uri: arr[i].url}} style={styles.image}></Image></TouchableHighlight>)
     }
     return (<View key={groupName} style={styles.cardContainer}><View style={styles.card}><Text>{groupName}</Text><View style={styles.imageContainer}>{images}</View></View></View>)
   }
@@ -135,11 +135,17 @@ var styles = StyleSheet.create({
     width: ((width - 110) / 3),
     height: ((width - 110) / 3),
     resizeMode: 'cover',
-    marginTop: 10,
     backgroundColor: '#eee'
   },
+  imageTouch: {
+    marginTop: 10,
+    marginBottom: 5,
+    marginRight: 15
+  },
   card: {
-    padding: 20,
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingBottom: 20,
     flex: 1,
     backgroundColor: '#fff',
     shadowColor: '#000000',
@@ -152,8 +158,7 @@ var styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    flexWrap: 'wrap'
   },
   cardContainer: {
     flexDirection: 'row',
@@ -163,7 +168,7 @@ var styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 10,
     marginLeft: 20,
     marginRight: 20
   },
@@ -177,8 +182,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalImage: {
-    width: width - 110,
-    height: (width - 110) * 1.33
+    width: width - 90,
+    height: (width - 90) * 1.33
   }
 });
 

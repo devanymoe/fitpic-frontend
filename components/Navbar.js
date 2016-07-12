@@ -6,7 +6,8 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 class Navbar extends Component {
@@ -22,9 +23,9 @@ class Navbar extends Component {
   render() {
     return (
       <View style={navStyles.nav}>
-        <TouchableHighlight onPress={this.handlePress.bind(this, 'menu')} style={navStyles.menu}>
+        <TouchableWithoutFeedback onPress={this.handlePress.bind(this, 'menu')} style={navStyles.menu}>
           <Icon name='menu' size={30} color='#fff'/>
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
         <Text style={[navStyles.text, navStyles.title]}>{this.props.title}</Text>
         <View style={navStyles.holder}>{this.props.right}</View>
       </View>
