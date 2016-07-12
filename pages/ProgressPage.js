@@ -50,7 +50,7 @@ class ProgressPage extends Component {
       var imageSections = [];
 
       if (pictures.first.front && pictures.last.front && pictures.first.front !== pictures.last.front) {
-        imageSections.push(<View key="front"><Text>Front Progress</Text>
+        imageSections.push(<View key="front"><Text style={styles.title}>Front Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.front)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.front}}/>
@@ -61,7 +61,7 @@ class ProgressPage extends Component {
         </View></View>)
       }
       if (pictures.first.side && pictures.last.side && pictures.first.side !== pictures.last.side) {
-        imageSections.push(<View key="side"><Text>Front Progress</Text>
+        imageSections.push(<View key="side"><Text style={styles.title}>Side Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.side)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.side}}/>
@@ -72,7 +72,7 @@ class ProgressPage extends Component {
         </View></View>)
       }
       if (pictures.first.back && pictures.last.back && pictures.first.back !== pictures.last.back) {
-        imageSections.push(<View key="back"><Text>Front Progress</Text>
+        imageSections.push(<View key="back"><Text style={styles.title}>Back Progress</Text>
         <View style={styles.imageContainer}>
           <TouchableHighlight onPress={this.setModalVisible.bind(this, true, pictures.first.back)} style={styles.imageTouch}>
             <Image style={styles.image} source={{uri: pictures.first.back}}/>
@@ -115,38 +115,54 @@ class ProgressPage extends Component {
         var calfDiff = measure.last.calf - measure.first.calf;
         var totalDiff = neckDiff + armDiff + chestDiff + waistDiff + hipsDiff + thighDiff + calfDiff;
 
-        return(<View style={styles.cardContainer} key="measurements"><View  style={styles.card}><Text>Total Change: {totalDiff}{unitsLength}</Text><View style={styles.measureContainer}>
-          <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{weightDiff}{unitsWeight}</Text>
-          <Text style={styles.measureTitle}>Weight</Text>
+        return(<View style={styles.cardContainer} key="measurements"><View  style={styles.card}><Text style={styles.title}>Total Change: {totalDiff}{unitsLength}</Text><View style={styles.splitter}></View><View style={styles.measureContainer}>
+          <View style={[styles.measurement, styles.measurementFirst]}>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{weightDiff}</Text><Text style={styles.measureUnit}>{unitsWeight}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Weight</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{neckDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Neck</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{neckDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Neck</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{armDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Bicep</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{armDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Bicep</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{chestDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Chest</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{chestDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Chest</Text>
+          </View>
+          <View style={[styles.measurement, styles.measurementFirst]}>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{waistDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Waist</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{waistDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Waist</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{hipsDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Hips</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{hipsDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Hips</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{thighDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Thigh</Text>
           </View>
           <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{thighDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Thigh</Text>
-          </View>
-          <View style={styles.measurement}>
-          <Text style={styles.measureValue}>{calfDiff}{unitsLength}</Text>
-          <Text style={styles.measureTitle}>Calf</Text>
+            <View style={styles.inline}>
+              <Text style={styles.measureValue}>{calfDiff}</Text><Text style={styles.measureUnit}>{unitsLength}</Text>
+            </View>
+            <Text style={styles.measureTitle}>Calf</Text>
           </View>
         </View></View></View>);
       }
@@ -189,7 +205,7 @@ class ProgressPage extends Component {
 
       return (
         <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
-          <Text style={styles.chartTitle}>Weight by Date</Text>
+          <Text style={[styles.title, styles.chartTitle]}>Weight by Date</Text>
           <Image source={{uri: chartUrl}} style={styles.chart}/>
         </View></View>
       )
@@ -213,7 +229,7 @@ class ProgressPage extends Component {
 
         return (
           <View key="progress-chart" style={styles.cardContainer}><View style={styles.card}>
-            <Text style={styles.chartTitle}>Difference by Measurements</Text>
+            <Text style={[styles.title, styles.chartTitle]}>Difference by Measurements</Text>
             <Image source={{uri: chartUrl}} style={styles.chart}/>
           </View></View>
         )
@@ -286,16 +302,35 @@ var styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 0
   },
+  measureContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
   measurement: {
     width: ((width - 80) / 4),
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'space-between',
+    paddingLeft: 14
+  },
+  measurementFirst: {
+    paddingLeft: 0
   },
   measureTitle: {
-
+    color: '#aaa'
   },
   measureValue: {
-    fontSize: 20,
-    color: '#aaa'
+    fontSize: 24,
+    color: '#FD704B'
+  },
+  measureUnit: {
+    marginBottom: 2,
+    color: '#FD704B',
+    fontSize: 16
+  },
+  inline: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
   },
   imageContainer: {
     flexDirection: 'row',
@@ -304,7 +339,7 @@ var styles = StyleSheet.create({
   },
   image: {
     width: ((width - 98) / 2),
-    height: ((width - 98) / 2),
+    height: ((width - 90) / 2),
     resizeMode: 'cover',
     backgroundColor: '#eee'
   },
@@ -335,6 +370,20 @@ var styles = StyleSheet.create({
   modalImage: {
     width: width - 90,
     height: (width - 90) * 1.33
+  },
+  splitter: {
+    height: 1,
+    backgroundColor: '#eee',
+    marginTop: 20,
+    marginBottom: 7
+  },
+  title: {
+    fontSize: 16,
+    color: '#aaa',
+    fontWeight: 'bold'
+  },
+  chartTitle: {
+    marginBottom: 30
   }
 });
 
