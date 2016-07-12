@@ -95,6 +95,7 @@ class App extends Component {
   renderScene(route, navigator) {
     var menu = <Menu navigator={navigator} onLogout={this.handleLogout.bind(this, navigator)}/>;
     var content;
+    var statusHidden = false;
 
     if (route.name === 'login') {
       content = <LoginSplashPage navigator={navigator} onLoggedIn={this.handleLogin.bind(this, navigator)}></LoginSplashPage>;
@@ -106,9 +107,11 @@ class App extends Component {
       content = <View style={viewStyles}><Navbar onOpenMenu={this.handleMenuPress} title="Pictures" right={<TouchableHighlight onPress={this.handleNewPhoto.bind(this, navigator)} underlayColor="#FD704B"><Icon name='add' size={30} color='#fff'/></TouchableHighlight>}/><PicturesPage navigator={navigator}/></View>;
     }
     else if (route.name === 'camera') {
+      statusHidden = true;
       content = <CameraPage navigator={navigator} type={route.type} date={route.date}/>;
     }
     else if (route.name === 'photoDraft') {
+      statusHidden = true;
       content = <PhotoDraftPage navigator={navigator} path={route.path} date={route.date} type={route.type}/>;
     }
     else if (route.name === 'measure') {
@@ -153,6 +156,12 @@ class App extends Component {
           main: { opacity:(2-ratio)/2 }
         })}
         >
+        <StatusBar
+        translucent={true}
+        barStyle={'default'}
+        backgroundColor={'rgba(0, 0, 0, 0.2)'}
+        hidden={statusHidden}
+        />
         {content}
       </Drawer>
     )
@@ -169,13 +178,9 @@ class App extends Component {
       else {
         var initRoute = 'login';
       }
+
       return (
         <View style={viewStyles}>
-        <StatusBar
-        translucent={true}
-        barStyle={'default'}
-        backgroundColor={'rgba(0, 0, 0, 0.2)'}
-        />
         <Navigator
         initialRoute={{name: initRoute, index: 0}}
         renderScene={this.renderScene}

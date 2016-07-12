@@ -4,6 +4,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
+        <item name="android:colorPrimary">#FD704B</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">#FD704B</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">#FD704B</item>
     </style>
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
       <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>

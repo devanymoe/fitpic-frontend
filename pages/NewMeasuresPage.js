@@ -173,8 +173,8 @@ var styles = StyleSheet.create({
   inputContainer: {
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
-    paddingLeft: 14,
-    paddingRight: 14,
+    paddingLeft: 16,
+    paddingRight: 16,
     paddingTop: 12,
     paddingBottom: 12,
     flexDirection: 'row',
@@ -192,8 +192,8 @@ var styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingTop: 16,
-    paddingLeft: 14,
-    paddingRight: 14
+    paddingLeft: 16,
+    paddingRight: 16
   },
   bottomButton: {
     marginTop: -4

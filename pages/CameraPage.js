@@ -8,10 +8,10 @@ import {
   Text,
   TouchableHighlight,
   Image,
-  View,
-  Slider
+  View
 } from 'react-native';
 import Camera from 'react-native-camera';
+import Slider from 'react-native-slider';
 
 class CameraPage extends Component {
   constructor(props) {
@@ -66,14 +66,18 @@ class CameraPage extends Component {
       <View style={styles.container}>
         {camera}
         <Image style={[styles.cover, {opacity: this.state.value}]} source={{uri: this.state.overlay}}></Image>
-        <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
-        <Button text="back" onPress={this.goBack} type="main"/>
-        <Slider
+        <View style={styles.camControls}>
+          <Slider
           onValueChange={(value) => this.setState({value: value})}
           style={styles.slider}
           value={0.4}
           maximumValue={0.8}
+          maximumTrackStyle="rgba(255, 255, 255, 0.2)"
+          thumbStyle={{backgroundColor: '#fff'}}
+          minimumTrackTintColor="#fff"
           />
+          <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
+        </View>
       </View>
     );
   }
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#000'
   },
   welcome: {
     fontSize: 20,
@@ -101,7 +105,6 @@ const styles = StyleSheet.create({
   preview: {
     height: width * 1.33,
     width: width,
-    position: 'absolute',
     top: 0,
     left: 0
   },
@@ -121,7 +124,13 @@ const styles = StyleSheet.create({
     top: 0
   },
   slider: {
-    width: 200
+    width: 240,
+    marginBottom: 20
+  },
+  camControls: {
+    height: height - (width * 1.33),
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
