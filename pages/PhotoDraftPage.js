@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Service from '../service';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   AppRegistry,
   Dimensions,
@@ -8,7 +9,8 @@ import {
   Text,
   TouchableHighlight,
   Image,
-  View
+  View,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Camera from 'react-native-camera';
 
@@ -31,11 +33,15 @@ class PhotoDraftPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.picContainer}>
-          <Image style={styles.cover} source={{uri: this.props.path}}></Image>
+        <Image style={styles.cover} source={{uri: this.props.path}}></Image>
+        <View style={styles.camControls}>
+          <TouchableWithoutFeedback onPress={this.retake}>
+            <Icon name='close' size={40} style={styles.icon}/>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.usePicture}>
+            <Icon name='done' size={40} style={styles.icon}/>
+          </TouchableWithoutFeedback>
         </View>
-        <Button text="retake" onPress={this.retake} type="gray"/>
-        <Button text="use" onPress={this.usePicture} type="main"/>
       </View>
     );
   }
@@ -48,19 +54,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  picContainer: {
-    height: width,
-    width: height
+    backgroundColor: '#000'
   },
   cover: {
-    height: width,
-    width: height,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    resizeMode: 'contain'
+    height: width * 1.33,
+    width: width,
+    top: 0
+  },
+  camControls: {
+    flexDirection: 'row',
+    height: height - (width * 1.33),
+    width: width,
+    paddingLeft: 50,
+    paddingRight: 50,
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  icon: {
+    color: '#fff'
   }
 });
 

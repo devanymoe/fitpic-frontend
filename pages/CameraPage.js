@@ -72,11 +72,14 @@ class CameraPage extends Component {
           style={styles.slider}
           value={0.4}
           maximumValue={0.8}
-          maximumTrackStyle="rgba(255, 255, 255, 0.2)"
-          thumbStyle={{backgroundColor: '#fff'}}
+          maximumTrackTintColor="#333"
+          thumbTintColor="#fff"
           minimumTrackTintColor="#fff"
+          trackStyle={{height: 2}}
           />
-          <Button style={styles.capture} onPress={this.takePicture.bind(this)} type="main" text="capture"/>
+          <TouchableHighlight onPress={this.takePicture.bind(this)}>
+            <View style={styles.captureButton}></View>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -92,32 +95,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   preview: {
     height: width * 1.33,
     width: width,
     top: 0,
     left: 0
   },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
   cover: {
-    // opacity: 0.3,
     height: width * 1.33,
     width: width,
     position: 'absolute',
@@ -131,6 +115,14 @@ const styles = StyleSheet.create({
     height: height - (width * 1.33),
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  captureButton: {
+    backgroundColor: '#ccc',
+    borderWidth: 6,
+    borderColor: '#fff',
+    borderRadius: 50,
+    height: 50,
+    width: 50
   }
 });
 

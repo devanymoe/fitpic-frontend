@@ -44,6 +44,11 @@ var styles = StyleSheet.create({
     paddingBottom: 14,
     backgroundColor: '#999'
   },
+  loginLarge: {
+    paddingTop: 14,
+    paddingBottom: 14,
+    backgroundColor: '#bf4c2e'
+  },
   large: {
     fontWeight: 'bold',
     fontSize: 15

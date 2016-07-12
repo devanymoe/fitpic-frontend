@@ -6,7 +6,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 
 class LoginSplashPage extends Component {
@@ -32,8 +33,18 @@ class LoginSplashPage extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>This is the Login Splash Page</Text>
-        <Button type="main" text="Login" onPress={this.showLogin}></Button>
+        <View style={styles.logoContainer}>
+          <Image source={require('../img/fitpic.png')} style={styles.logo}/>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button type="loginLarge" text="Login" textStyle="large" onPress={this.showLogin}></Button>
+        </View>
+        <View>
+          <Image source={require('../img/cam.png')} style={[styles.cam, styles.camOne]}/>
+        </View>
+        <View>
+          <Image source={require('../img/cam.png')} style={[styles.cam, styles.camTwo]}/>
+        </View>
       </View>
     )
   }
@@ -44,10 +55,36 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#FD704B'
   },
   blankContainer: {
     backgroundColor: '#eee'
+  },
+  buttonContainer: {
+    width: 150
+  },
+  logoContainer: {
+    width: 200
+  },
+  logo: {
+    resizeMode: 'contain',
+    width: 200,
+    height: 93,
+    marginBottom: 60
+  },
+  cam: {
+    width: 256,
+    height: 256,
+    position: 'absolute',
+    resizeMode: 'contain'
+  },
+  camOne: {
+    right: -300,
+    top: -500
+  },
+  camTwo: {
+    left: -280,
+    bottom: -270,
   }
 });
 
