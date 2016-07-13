@@ -185,7 +185,7 @@ class ProgressPage extends Component {
       var low = 0;
       var high = 0;
 
-      for (var i = 0; i < weight.length; i++) {
+      for (var i = weight.length - 1; i >= 0; i--) {
         if (low === 0 && high === 0) {
           low = weight[i].weight;
           high = weight[i].weight;
@@ -208,13 +208,13 @@ class ProgressPage extends Component {
         axis = axis + '|' + weight[i].date;
       }
 
-      var chartUrl = 'http://chart.apis.google.com/chart?cht=bhg&chs=550x230&chd=t:' + data + '&chxt=x,y&chxl=1:' + axis + '&chxr=0,' + (low - 20) + ',' + (high + 20) + '&chds=' + (low - 20) + ',' + (high + 20) + '&chco=FD704B&chbh=35,0,15';
+      var chartUrl = 'http://chart.apis.google.com/chart?cht=bhg&chs=350x170&chd=t:' + data + '&chxt=x,y&chxl=1:' + axis + '&chxr=0,' + (low - 20) + ',' + (high + 20) + '&chds=' + (low - 20) + ',' + (high + 20) + '&chco=FD704B&chbh=35,0,15';
       console.log(chartUrl)
 
       return (
         <View key="weight-chart" style={styles.cardContainer}><View style={styles.card}>
           <Text style={[styles.title, styles.chartTitle]}>Weight by Date</Text>
-          <Image source={{uri: chartUrl}} style={styles.chart}/>
+          <Image source={{uri: chartUrl}} style={[styles.chart, styles.barChart]}/>
         </View></View>
       )
     }
@@ -386,6 +386,9 @@ var styles = StyleSheet.create({
   },
   chartTitle: {
     marginBottom: 30
+  },
+  barChart: {
+    marginTop: -26
   },
   splitter: {
     height: 1,
