@@ -190,7 +190,7 @@ export default {
       return fetch(url + '/users/pictures/new', options).then((res) => {
         return res.json().then((data) => {
           if (pictures) {
-            pictures.push(data);
+            pictures.unshift(data);
           }
           return data;
         });

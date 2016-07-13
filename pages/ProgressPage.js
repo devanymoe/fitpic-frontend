@@ -237,7 +237,7 @@ class ProgressPage extends Component {
 
         return (
           <View key="progress-chart" style={styles.cardContainer}><View style={styles.card}>
-            <Text style={[styles.title, styles.chartTitle]}>Difference by Measurements</Text>
+            <Text style={[styles.title, styles.chartTitle]}>Difference by Measurement Type</Text>
             <Image source={{uri: chartUrl}} style={styles.chart}/>
           </View></View>
         )
