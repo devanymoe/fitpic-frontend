@@ -375,16 +375,16 @@ var styles = StyleSheet.create({
     marginRight: 15
   },
   boxOne: {
-    backgroundColor: '#ffab95'
+    backgroundColor: '#ffa58e'
   },
   boxTwo: {
-    backgroundColor: '#CC5A72'
+    backgroundColor: '#ffa58e'
   },
   boxThree: {
-    backgroundColor: '#985277'
+    backgroundColor: '#ffa58e'
   },
   boxFour: {
-    backgroundColor: '#f9627d'
+    backgroundColor: '#ffa58e'
   },
   scrollView: {
     paddingBottom: 20

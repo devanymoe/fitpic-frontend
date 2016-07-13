@@ -59,6 +59,10 @@ class ProgressPage extends Component {
             <Image style={styles.image} source={{uri: pictures.last.front}}/>
           </TouchableHighlight>
         </View></View>)
+
+        if ((pictures.first.side && pictures.last.side) || (pictures.first.back && pictures.last.back)) {
+          imageSections.push(<View style={styles.splitter} key="split1"></View>);
+        }
       }
       if (pictures.first.side && pictures.last.side && pictures.first.side !== pictures.last.side) {
         imageSections.push(<View key="side"><Text style={styles.title}>Side Progress</Text>
@@ -70,6 +74,10 @@ class ProgressPage extends Component {
             <Image style={styles.image} source={{uri: pictures.last.side}}/>
           </TouchableHighlight>
         </View></View>)
+
+        if (pictures.first.back && pictures.last.back) {
+          imageSections.push(<View style={styles.splitter} key="split2"></View>);
+        }
       }
       if (pictures.first.back && pictures.last.back && pictures.first.back !== pictures.last.back) {
         imageSections.push(<View key="back"><Text style={styles.title}>Back Progress</Text>
@@ -371,12 +379,6 @@ var styles = StyleSheet.create({
     width: width - 90,
     height: (width - 90) * 1.33
   },
-  splitter: {
-    height: 1,
-    backgroundColor: '#eee',
-    marginTop: 20,
-    marginBottom: 7
-  },
   title: {
     fontSize: 16,
     color: '#aaa',
@@ -384,6 +386,12 @@ var styles = StyleSheet.create({
   },
   chartTitle: {
     marginBottom: 30
+  },
+  splitter: {
+    height: 1,
+    backgroundColor: '#eee',
+    marginTop: 24,
+    marginBottom: 16
   }
 });
 
