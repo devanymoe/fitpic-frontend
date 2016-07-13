@@ -3,3 +3,4 @@
 
 Technologies used include React Native, AWS S3, Auth0, JWT, Multer, Knex, PostgreSQL, Node.js, and Express.
 
+![FitPic](https://cloud.githubusercontent.com/assets/13595230/16793488/506bc31a-4886-11e6-9564-326b7e6d107a.jpg)
